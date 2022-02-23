@@ -30,7 +30,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
 
 	// apache lib
@@ -41,11 +40,26 @@ dependencies {
 	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 	implementation 'org.apache.commons:commons-compress:1.21'
 
-	// mysql
-	runtimeOnly 'mysql:mysql-connector-java:8.0.21'
-
 	//log
 	implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4', version: '1.16'
+
+	// java mail
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// google
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+	implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+
+	// test
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	// mysql
+	runtimeOnly 'mysql:mysql-connector-java:8.0.21'
 
 	// lombok
 	compileOnly 'org.projectlombok:lombok'
@@ -54,19 +68,6 @@ dependencies {
 
 	// annotation processor
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-
-
-	// java mail
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
-
-	// security
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-
-	// test
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-	testImplementation 'org.springframework.security:spring-security-test'
-
 }
 
 tasks.named('test') {
