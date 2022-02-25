@@ -1,7 +1,7 @@
-package com.pims.main.api.controller;
+package com.pims.api.core.controller;
 
 
-import com.pims.main.api.mapper.TestMapper;
+import com.pims.api.core.mapper.TestMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

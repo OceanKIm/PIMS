@@ -1,4 +1,4 @@
-package com.pims.main.response.dto;
+package com.pims.api.response.dto;
 
 import lombok.Data;
 

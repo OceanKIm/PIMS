@@ -8,7 +8,7 @@
 
     <!--콘솔에 로그를 남깁니다.-->
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
-        <filter class="com.pims.main.filter.LogbackFilter"/>
+        <filter class="com.pims.api.filter.LogbackFilter"/>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>%d{yyyy.MM.dd HH:mm:ss.SSS} [%X{address}] [%thread] %-3level %logger{5} - %msg %n</pattern>
             <charset>UTF-8</charset>

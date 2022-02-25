@@ -1,10 +1,13 @@
-package com.pims.main.utils;
+package com.pims.api.utils;
 
 
+import com.pims.api.resolver.CustomLocaleResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * MessageUtils
@@ -21,8 +24,8 @@ public class MessageUtils {
     @Autowired
     private MessageSource messageSource;
 
-//    @Autowired
-//    private CustomLocaleResolver customLocaleResolver;
+    @Autowired
+    private CustomLocaleResolver customLocaleResolver;
 
 
     /**
@@ -41,11 +44,11 @@ public class MessageUtils {
      * @param code 언어팩 코드
      * @param request 헤더에서 커스텀 지역 값 추출
      * @return String
-
+     */
     public String getMessage(String code, HttpServletRequest request) {
         return messageSource.getMessage(code, null, customLocaleResolver.resolveLocale(request));
     }
-     */
+
 
     /**
      * 언어팩 언어 가져오기

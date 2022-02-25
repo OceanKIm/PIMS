@@ -1,4 +1,4 @@
-package com.pims.main.utils;
+package com.pims.api.utils;
 
 import lombok.extern.log4j.Log4j2;
 import org.joda.time.DateTime;
@@ -31,6 +31,7 @@ public class DateUtils {
      */
     private static String defaultDatePattern = null;
     private static String BUNDLE_KEY = null;
+
     /**
      * Date format
      */

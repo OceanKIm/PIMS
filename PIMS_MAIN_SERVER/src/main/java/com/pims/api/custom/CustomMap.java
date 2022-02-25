@@ -1,6 +1,6 @@
-package com.pims.main.custom;
+package com.pims.api.custom;
 
-import com.pims.main.utils.DateUtils;
+import com.pims.api.utils.DateUtils;
 import java.util.Date;
 import java.util.LinkedHashMap;
 
@@ -22,7 +22,7 @@ public class CustomMap extends LinkedHashMap<String, Object> {
         }
         if (value instanceof Date) {
             if ("java.sql.Timestamp".equals(value.getClass().getName())) {
-                value = DateUtils.format((Date) value, DateUtils.TIMESTAMP_FORMAT2);
+                value = DateUtils.format((Date) value, DateUtils.DATE_PATTERN);
             } else {
                 value = DateUtils.format((Date) value, DateUtils.DATE_PATTERN_FORMAT);
             }

@@ -1,4 +1,4 @@
-package com.pims.main.config;
+package com.pims.api.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;

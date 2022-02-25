@@ -1,4 +1,4 @@
-package com.pims.main.response.code;
+package com.pims.api.response.code;
 
 /**
  * MessageCode
