@@ -126,7 +126,7 @@ public class Const {
         ASC("ASC"),
         DESC("DESC");
 
-        private String type;
+        private final String type;
 
         eORDER_BY_TYPE(String type) {
             this.type = type;

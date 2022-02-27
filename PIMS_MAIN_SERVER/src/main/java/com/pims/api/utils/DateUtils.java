@@ -23,14 +23,13 @@ import java.util.*;
  * @version 1.0.0
  * 작성일 2022-02-25
 **/
-@Log4j2
 public class DateUtils {
 
     /**
      * Default data format variable
      */
     private static String defaultDatePattern = null;
-    private static String BUNDLE_KEY = null;
+    private static final String BUNDLE_KEY = null;
 
     /**
      * Date format
@@ -261,10 +260,7 @@ public class DateUtils {
      * @return 같으면 true, 다르면 false
      */
     public static boolean equals(Date date1, Date date2) {
-        if (date1.getTime() == date2.getTime()) {
-            return true;
-        }
-        return false;
+        return date1.getTime() == date2.getTime();
     }
 
     /**
@@ -299,10 +295,7 @@ public class DateUtils {
      * @return 첫번째 날짜가 두번째 날짜와 같거나 그 이후의 날짜이면 true, 첫번째 날짜가 두번째 날짜의 이전 날짜이면 false
      */
     public static boolean greaterThan(Date date1, Date date2) {
-        if (date1.getTime() > date2.getTime()) {
-            return true;
-        }
-        return false;
+        return date1.getTime() > date2.getTime();
     }
 
     /**
@@ -351,16 +344,16 @@ public class DateUtils {
         String xMon = "";
         String xDay = "";
         if (mon < 10) {
-            xMon = "0" + (new Integer(mon)).toString();
+            xMon = "0" + (new Integer(mon));
         } else {
             xMon = (new Integer(mon)).toString();
         }
         if (day < 10) {
-            xDay = "0" + (new Integer(day)).toString();
+            xDay = "0" + (new Integer(day));
         } else {
             xDay = (new Integer(day)).toString();
         }
-        String endDay = (new Integer(year)).toString() + "-" + xMon + "-" + xDay;
+        String endDay = (new Integer(year)) + "-" + xMon + "-" + xDay;
         return endDay;
     }
 
@@ -521,10 +514,7 @@ public class DateUtils {
         DateTime dt = new DateTime();
         dt = fmt.parseDateTime(str);
 
-        if (!fmt.print(dt).equals(str)) {
-            return false;
-        }
-        return true;
+        return fmt.print(dt).equals(str);
     }
 
     /**
@@ -559,10 +549,7 @@ public class DateUtils {
         DateTime dt = new DateTime();
         dt = fmt.parseDateTime(str);
 
-        if (!fmt.print(dt).equals(str)) {
-            return false;
-        }
-        return true;
+        return fmt.print(dt).equals(str);
     }
 
     /**
@@ -657,9 +644,9 @@ public class DateUtils {
 
     public static Timestamp getInsertDate() {
         Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
-        log.info("====================");
-        log.info(timestamp);
-        log.info("====================");
+//        log.info("====================");
+//        log.info(timestamp);
+//        log.info("====================");
         return timestamp;
     }
 

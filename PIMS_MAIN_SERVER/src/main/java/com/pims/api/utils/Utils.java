@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
  * @version 1.0.0
  * 작성일 2022-02-26
 **/
-@Log4j2
 public class Utils {
 
 
@@ -159,7 +158,7 @@ public class Utils {
             return propertiesList;
 
         } catch (Exception e) {
-            log.error(e.getMessage());
+            //log.error(e.getMessage());
         }
 
         return null;
@@ -177,10 +176,10 @@ public class Utils {
         try {
             headers = Utils.getPropertiesList(header);
         } catch (Exception e) {
-            log.error("=================================================================");
-            log.error("BaseWebConfig header to array not work");
-            log.error(e.getMessage());
-            log.error("=================================================================");
+//            log.error("=================================================================");
+//            log.error("BaseWebConfig header to array not work");
+//            log.error(e.getMessage());
+//            log.error("=================================================================");
         }
         if (null == headers) {
             headers = new ArrayList<>();
@@ -197,8 +196,8 @@ public class Utils {
     public static String decode(String uni) {
         StringBuffer str = new StringBuffer();
         for (int i = uni.indexOf("\\u"); i > -1; i = uni.indexOf("\\u")) {// euc-kr(%u), utf-8(//u)
-            str.append(uni.substring(0, i));
-            str.append(String.valueOf((char) Integer.parseInt(uni.substring(i + 2, i + 6), 16)));
+            str.append(uni, 0, i);
+            str.append((char) Integer.parseInt(uni.substring(i + 2, i + 6), 16));
             uni = uni.substring(i + 6);
         }
         str.append(uni);
@@ -285,15 +284,15 @@ public class Utils {
             params.put("date", DateUtils.getCurrentTime(String.format("%s %s", DateUtils.DATE_PATTERN, DateUtils.TIME_PATTERN_SEC)));
             params.put("params", Utils.getParams(request));
         } catch (Exception e) {
-            log.error("LoggerAspect error", e);
+            //log.error("LoggerAspect error", e);
         }
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String strParams = gson.toJson(params).replace("\\\\\\", "").replace("\"[", "[").replace("]\"", "]");
-        log.info("====================================================================================================");
-        log.info("Request Info");
-        log.info("====================================================================================================");
-        log.info("params : \n" + strParams); // request 담긴 정보들을 한번에 로깅한다.
-        log.info("====================================================================================================");
+//        log.info("====================================================================================================");
+//        log.info("Request Info");
+//        log.info("====================================================================================================");
+//        log.info("params : \n" + strParams); // request 담긴 정보들을 한번에 로깅한다.
+//        log.info("====================================================================================================");
     }
 
     /**
@@ -306,10 +305,10 @@ public class Utils {
         if (!isServerAopLog) return;
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String strResult = gson.toJson(responseEntity);
-        log.info("Response Info");
-        log.info("====================================================================================================");
-        log.info("result : \n" + Utils.decode(strResult)); // 결과 정보들을 한번에 로깅한다.
-        log.info("====================================================================================================");
+//        log.info("Response Info");
+//        log.info("====================================================================================================");
+//        log.info("result : \n" + Utils.decode(strResult)); // 결과 정보들을 한번에 로깅한다.
+//        log.info("====================================================================================================");
 
     }
 
