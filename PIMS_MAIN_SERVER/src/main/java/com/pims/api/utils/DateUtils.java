@@ -23,6 +23,7 @@ import java.util.*;
  * @version 1.0.0
  * 작성일 2022-02-25
 **/
+@Log4j2
 public class DateUtils {
 
     /**

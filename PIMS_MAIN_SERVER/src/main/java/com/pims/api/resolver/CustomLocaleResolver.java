@@ -22,6 +22,7 @@ import java.util.Locale;
  * @version 1.0.0
  * 작성일 2022-02-26
 **/
+@Log4j2
 @Component
 public class CustomLocaleResolver extends AcceptHeaderLocaleResolver {
 
@@ -37,9 +38,9 @@ public class CustomLocaleResolver extends AcceptHeaderLocaleResolver {
         if (StringUtils.isEmpty(acceptLanguage)) {
             return Locale.getDefault();
         }
-//        log.info("================================================");
-//        log.info("Accept-Language : {}", acceptLanguage);
-//        log.info("================================================");
+        log.info("================================================");
+        log.info("Accept-Language : {}", acceptLanguage);
+        log.info("================================================");
         List<Locale.LanguageRange> list = Locale.LanguageRange.parse(request.getHeader("accept-language-pims"));
         ArrayList<String> languageCodeArray = Utils.getPropertiesList(mLanguageCode);
         if (null != languageCodeArray) {
@@ -63,9 +64,9 @@ public class CustomLocaleResolver extends AcceptHeaderLocaleResolver {
         List<Locale> settingLocales = Arrays.asList(new Locale("en"), new Locale("es"), new Locale("ko"));
         List<Locale.LanguageRange> list = Locale.LanguageRange.parse(request.getHeader("accept-language-pims"));
 
-//        log.info("================================================");
-//        log.info("Accept-Language : {}", acceptLanguage);
-//        log.info("================================================");
+        log.info("================================================");
+        log.info("Accept-Language : {}", acceptLanguage);
+        log.info("================================================");
         return Locale.lookup(list, settingLocales);
     }
 

@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
  * @version 1.0.0
  * 작성일 2022-02-26
 **/
+@Log4j2
 public class Utils {
 
 
