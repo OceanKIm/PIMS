@@ -26,11 +26,19 @@ ext {
 dependencies {
 
 	// TODO : 각 의존성 기능 명확히 숙지
-	// basic setting
+	// spring starter
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+	// jpa
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// mybatis
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+
+
+
 
 	// apache lib
 	implementation group: 'commons-codec', name: 'commons-codec', version: '1.5'
