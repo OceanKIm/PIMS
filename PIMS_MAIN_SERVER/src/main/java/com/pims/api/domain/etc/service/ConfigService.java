@@ -1,7 +1,7 @@
-package com.pims.api.core.etc.service;
+package com.pims.api.domain.etc.service;
 
 import com.pims.api.cont.Const;
-import com.pims.api.core.etc.mapper.ConfigMapper;
+import com.pims.api.domain.etc.mapper.ConfigMapper;
 import com.pims.api.custom.CustomMap;
 import com.pims.api.utils.Utils;
 import lombok.extern.log4j.Log4j2;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * ConfigService

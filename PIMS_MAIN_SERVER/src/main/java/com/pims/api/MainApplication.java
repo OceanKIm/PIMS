@@ -1,7 +1,7 @@
 package com.pims.api;
 
 import com.pims.api.cont.Const;
-import com.pims.api.core.etc.service.ConfigService;
+import com.pims.api.domain.etc.service.ConfigService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

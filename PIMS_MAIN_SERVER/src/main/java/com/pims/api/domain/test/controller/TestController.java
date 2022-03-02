@@ -1,8 +1,8 @@
-package com.pims.api.core.test.controller;
+package com.pims.api.domain.test.controller;
 
 
 
-import com.pims.api.core.test.service.TestService;
+import com.pims.api.domain.test.service.TestService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +22,6 @@ TestController {
 
     @RequestMapping(value = "test.do", method = RequestMethod.POST)
     public ResponseEntity<?> testApi(@RequestBody HashMap<String, Object> hashMap) {
-        System.out.println("=========== api test ===========");
-        System.out.println(hashMap);
         testService.insertTest(hashMap);
         return new ResponseEntity<>(HttpStatus.OK);
     }

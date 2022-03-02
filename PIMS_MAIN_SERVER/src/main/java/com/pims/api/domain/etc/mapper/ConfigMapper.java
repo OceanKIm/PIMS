@@ -1,4 +1,4 @@
-package com.pims.api.core.etc.mapper;
+package com.pims.api.domain.etc.mapper;
 
 import com.pims.api.custom.CustomMap;
 import org.apache.ibatis.annotations.Mapper;
@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * ConfigMapper

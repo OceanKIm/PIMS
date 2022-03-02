@@ -1,5 +1,6 @@
 package com.pims.api.aop;
 
+import com.pims.api.utils.LoggingUtils;
 import com.pims.api.utils.Utils;
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -33,10 +34,8 @@ public class LoggerAspect {
     /**
      * AOP 로그 포인트컷 선언
      */
-    @Pointcut("execution(*  com.lge.webos.lgb_main_server.api.controller..*Controller.*(..))") // 이런 패턴이 실행될 경우 수행
-    public void loggerPointCut() {
-
-    }
+    @Pointcut("execution(*  com.pims.api.domain..controller..*Controller.*(..))") // 이런 패턴이 실행될 경우 수행
+    public void loggerPointCut() {}
 
     /**
      * AOP 로그
@@ -48,15 +47,14 @@ public class LoggerAspect {
     @Around("loggerPointCut()")
     public Object methodLogger(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         // call before
-        // TODO :: logic
+        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        LoggingUtils.showCallLog(proceedingJoinPoint.getSignature(), request);
 
         // call
         ResponseEntity<?> result = (ResponseEntity<?>) proceedingJoinPoint.proceed();
 
         // call after
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        Utils.showCallLog(proceedingJoinPoint.getSignature(), request, result);
-
+        LoggingUtils.showCallLog(result);
         return result;
     }
 }

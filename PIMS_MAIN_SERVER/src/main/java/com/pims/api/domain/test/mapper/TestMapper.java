@@ -1,4 +1,4 @@
-package com.pims.api.core.test.mapper;
+package com.pims.api.domain.test.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;

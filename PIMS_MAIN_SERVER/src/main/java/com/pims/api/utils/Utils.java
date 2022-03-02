@@ -1,17 +1,13 @@
 package com.pims.api.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.pims.api.cont.Const;
+
 import com.pims.api.custom.CustomMap;
 import lombok.extern.log4j.Log4j2;
-import org.aspectj.lang.Signature;
 import org.json.simple.JSONObject;
-import org.springframework.http.ResponseEntity;
+
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Utils
@@ -159,15 +155,14 @@ public class Utils {
             return propertiesList;
 
         } catch (Exception e) {
-            //log.error(e.getMessage());
+            log.error(e.getMessage());
         }
 
         return null;
     }
 
-
     /**
-     * reqeust 헤더 정보 가져오기
+     * request 헤더 정보 가져오기
      *
      * @param header request Header
      * @return ArrayList 헤더 내용
@@ -177,10 +172,10 @@ public class Utils {
         try {
             headers = Utils.getPropertiesList(header);
         } catch (Exception e) {
-//            log.error("=================================================================");
-//            log.error("BaseWebConfig header to array not work");
-//            log.error(e.getMessage());
-//            log.error("=================================================================");
+            log.error("=================================================================");
+            log.error("BaseWebConfig header to array not work");
+            log.error(e.getMessage());
+            log.error("=================================================================");
         }
         if (null == headers) {
             headers = new ArrayList<>();
@@ -220,97 +215,6 @@ public class Utils {
             jsonObject.put(replaceParam, request.getParameter(param));
         }
         return jsonObject;
-    }
-
-
-    /**
-     * 요청, 응답 로그 표현
-     *
-     * @param signature      요청 정보
-     * @param request        요청 객체
-     * @param responseEntity 응답 객체
-     */
-    public static void showCallLog(Signature signature, HttpServletRequest request, ResponseEntity<?> responseEntity) {
-        showRequestLog(signature, request);
-        showResponseLog(responseEntity);
-    }
-
-
-    /**
-     * 요청 로그 표현
-     *
-     * @param signature 요청 정보
-     * @param request   요청 객체
-     */
-    public static void showCallLog(Signature signature, HttpServletRequest request) {
-        showRequestLog(signature, request);
-    }
-
-
-    /**
-     * 응답 로그 표현
-     *
-     * @param responseEntity 응답 객체
-     */
-    public static void showCallLog(ResponseEntity<?> responseEntity) {
-        showResponseLog(responseEntity);
-    }
-
-
-    /**
-     * 요청 로그 비즈니스 로직
-     *
-     * @param signature 요청 정보
-     * @param request   요청 객체
-     */
-    private static void showRequestLog(Signature signature, HttpServletRequest request) {
-        boolean isServerAopLog = "Y".equals(Const.G_SERVER_CONFIG.get(Const.eCONFIG_KEY.IS_SERVER_AOP_LOG.name()));
-        boolean isServerAopReqHeaderLog = "Y".equals(Const.G_SERVER_CONFIG.get(Const.eCONFIG_KEY.IS_SERVER_AOP_REQ_LOG_HEADER.name()));
-        if (!isServerAopLog) return;
-
-        String controllerName = signature.getDeclaringType().getSimpleName();
-        String methodName = signature.getName();
-        LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-        Map<String, String> headersMap = Collections.list(request.getHeaderNames()).stream().collect(Collectors.toMap(name -> name, request::getHeader));
-
-        try {
-            if (isServerAopReqHeaderLog) {
-                params.put("header", headersMap);
-            }
-            params.put("http_method", request.getMethod());
-            params.put("request_url", request.getRequestURL());
-            params.put("request_uri", request.getRequestURI());
-            params.put("controller", controllerName);
-            params.put("method", methodName);
-            params.put("date", DateUtils.getCurrentTime(String.format("%s %s", DateUtils.DATE_PATTERN, DateUtils.TIME_PATTERN_SEC)));
-            params.put("params", Utils.getParams(request));
-        } catch (Exception e) {
-            //log.error("LoggerAspect error", e);
-        }
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String strParams = gson.toJson(params).replace("\\\\\\", "").replace("\"[", "[").replace("]\"", "]");
-//        log.info("====================================================================================================");
-//        log.info("Request Info");
-//        log.info("====================================================================================================");
-//        log.info("params : \n" + strParams); // request 담긴 정보들을 한번에 로깅한다.
-//        log.info("====================================================================================================");
-    }
-
-    /**
-     * 응답 로그 비즈니스 로직
-     *
-     * @param responseEntity 응답 객체
-     */
-    private static void showResponseLog(ResponseEntity<?> responseEntity) {
-        boolean isServerAopLog = "Y".equals(Const.G_SERVER_CONFIG.get(Const.eCONFIG_KEY.IS_SERVER_AOP_LOG.name()));
-        if (!isServerAopLog) return;
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String strResult = gson.toJson(responseEntity);
-//        log.info("Response Info");
-//        log.info("====================================================================================================");
-//        log.info("result : \n" + Utils.decode(strResult)); // 결과 정보들을 한번에 로깅한다.
-//        log.info("====================================================================================================");
-
     }
 
     public static void addRequestDate(HashMap<String, Object> requestMap) {

@@ -1,9 +1,8 @@
 package com.pims.api.utils;
 
-import com.pims.api.core.common.code.MessageCode;
-import com.pims.api.core.common.code.ResultCode;
-import com.pims.api.core.common.dto.ResponseDTO;
-import com.pims.api.utils.MessageUtils;
+import com.pims.api.domain.common.code.MessageCode;
+import com.pims.api.domain.common.code.ResultCode;
+import com.pims.api.domain.common.dto.ResponseDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

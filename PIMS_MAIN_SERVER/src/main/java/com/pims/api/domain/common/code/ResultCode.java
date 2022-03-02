@@ -1,4 +1,4 @@
-package com.pims.api.core.common.code;
+package com.pims.api.domain.common.code;
 
 /**
  * ResultCode
