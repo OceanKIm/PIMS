@@ -1,8 +1,8 @@
-package com.pims.api.core.controller;
+package com.pims.api.core.test.controller;
 
 
 
-import com.pims.api.core.service.TestService;
+import com.pims.api.core.test.service.TestService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

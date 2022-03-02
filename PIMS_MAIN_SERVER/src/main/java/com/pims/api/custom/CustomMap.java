@@ -14,6 +14,14 @@ import java.util.LinkedHashMap;
 **/
 public class CustomMap extends LinkedHashMap<String, Object> {
 
+    /**
+     * 커스텀
+     * : 문자열 값 입력시 trim 적용
+     * : 날짜 타입 입력시 설정 포멧 적용
+     * @param key 키값
+     * @param value 벨류값
+     * @return Object
+    */
     @Override
     public Object put(String key, Object value) {
         key = key.trim();

@@ -1,6 +1,6 @@
-package com.pims.api.core.service;
+package com.pims.api.core.test.service;
 
-import com.pims.api.core.mapper.TestMapper;
+import com.pims.api.core.test.mapper.TestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

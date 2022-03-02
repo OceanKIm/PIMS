@@ -24,7 +24,7 @@ import javax.sql.DataSource;
  * 작성일 2022-02-23
 **/
 @Configuration
-@MapperScan(value = "com.pims.api.core.mapper", sqlSessionFactoryRef = "SqlSessionFactory")
+@MapperScan(value = "com.pims.api.core.*.mapper", sqlSessionFactoryRef = "SqlSessionFactory")
 public class DataBaseConfig {
 
     @Value("${spring.datasource.mapper-locations}")

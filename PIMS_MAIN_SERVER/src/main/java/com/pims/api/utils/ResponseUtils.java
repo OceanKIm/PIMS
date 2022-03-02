@@ -1,8 +1,8 @@
-package com.pims.api.response;
+package com.pims.api.utils;
 
-import com.pims.api.response.code.MessageCode;
-import com.pims.api.response.code.ResultCode;
-import com.pims.api.response.dto.ResponseDTO;
+import com.pims.api.core.common.code.MessageCode;
+import com.pims.api.core.common.code.ResultCode;
+import com.pims.api.core.common.dto.ResponseDTO;
 import com.pims.api.utils.MessageUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

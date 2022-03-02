@@ -1,5 +1,7 @@
 package com.pims.api.cont;
 
+import com.pims.api.custom.CustomMap;
+
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -13,7 +15,7 @@ import java.util.HashMap;
 **/
 public class Const {
 
-    public static final HashMap<String, Object> G_SERVER_CONFIG = new HashMap<>();
+    public static final CustomMap G_SERVER_CONFIG = new CustomMap();
 
     /**
      * DB 설정테이블 키

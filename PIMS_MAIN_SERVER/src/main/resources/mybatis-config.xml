@@ -18,5 +18,8 @@
         <setting name="jdbcTypeForNull" value="OTHER"/>
         <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString"/>
     </settings>
+    <typeAliases>
+        <typeAlias alias="Custom" type="com.pims.api.custom.CustomMap"/>
+    </typeAliases>
 </configuration>
 

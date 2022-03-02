@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pims.api.core.etc.mapper.ConfigMapper">
+
+    <select id="selectConfigInfoList" resultType="Custom">
+        <![CDATA[
+            /* 설정 조회 */
+        ]]>
+        SELECT *
+        FROM pims_config
+
+    </select>
+
+    <select id="selectConfigInfo" resultType="Custom">
+        <![CDATA[
+        /* 단건 설정 조회 */
+        ]]>
+        SELECT *
+        FROM pims_config
+        WHERE pims_key = #{key}
+    </select>
+
+    <update id="updateConfigInfo">
+        <![CDATA[
+            /* 설정 수정 */
+        ]]>
+        <foreach collection="requestArray" item="item" index="index" open="" close="" separator=";">
+            UPDATE pims_config
+            SET pims_value = #{item.value}
+            WHERE pims_key = #{item.key}
+        </foreach>
+    </update>
+
+</mapper>

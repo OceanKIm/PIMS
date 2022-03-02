@@ -1,7 +1,9 @@
 package com.pims.api;
 
 import com.pims.api.cont.Const;
+import com.pims.api.core.etc.service.ConfigService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,6 +29,9 @@ public class MainApplication {
 	@Value("${server.port}")
 	private Integer mPort;
 
+	@Autowired
+	private ConfigService configService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(MainApplication.class, args);
 	}
@@ -37,7 +42,7 @@ public class MainApplication {
 	@EventListener(ApplicationStartedEvent.class)
 	public void startServer() {
 		// DB 설정 정보 불러오기
-		//service.selectConfig00000(); // TODO :: later
+		configService.loadServerConfig();
 		String ip = InetAddress.getLoopbackAddress().getHostAddress();
 		log.info("===============================================================");
 		log.info("BASE SERVER CONFIG :");
