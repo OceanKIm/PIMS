@@ -1,18 +1,14 @@
 package com.pims.api.domain.etc.service;
 
 import com.pims.api.cont.Const;
-import com.pims.api.domain.etc.entity.Config;
-import com.pims.api.domain.etc.mapper.ConfigMapper;
-import com.pims.api.custom.CustomMap;
+import com.pims.api.domain.etc.entity.ConfigEntity;
 import com.pims.api.domain.etc.repository.ConfigRepository;
 import com.pims.api.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,14 +32,14 @@ public class ConfigService {
     public void loadServerConfig() {
         String key = null;
         String value = null;
-        List<Config> resultList = configRepository.findAll();
+        List<ConfigEntity> resultList = configRepository.findAll();
         try {
-            for (Config config : resultList) {
-                if (null != config.getPims_key()) {
-                    key = config.getPims_key();
+            for (ConfigEntity config : resultList) {
+                if (null != config.getPimsKey()) {
+                    key = config.getPimsKey();
                 }
-                if (null != config.getPims_value()) {
-                    value = config.getPims_value();
+                if (null != config.getPimsValue()) {
+                    value = config.getPimsValue();
                 }
                 if (StringUtils.isEmpty(value)) {
                     log.warn("=====================================");
@@ -63,4 +59,5 @@ public class ConfigService {
             log.error("=============================================");
         }
     }
+
 }

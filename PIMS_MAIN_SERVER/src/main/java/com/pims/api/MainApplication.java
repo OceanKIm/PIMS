@@ -58,8 +58,6 @@ public class MainApplication {
 	 * 서버 종료시 콜백
 	 */
 	@PreDestroy
-	public void onExit() {
-
-	}
+	public void onExit() {}
 
 }
