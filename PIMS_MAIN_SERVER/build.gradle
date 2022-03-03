@@ -25,7 +25,6 @@ ext {
 
 dependencies {
 
-	// TODO : 각 의존성 기능 명확히 숙지
 	// spring starter
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -36,9 +35,6 @@ dependencies {
 
 	// mybatis
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
-
-
-
 
 	// apache lib
 	implementation group: 'commons-codec', name: 'commons-codec', version: '1.5'
@@ -69,6 +65,9 @@ dependencies {
 
 	// aspectj
 	implementation group: 'org.aspectj', name: 'aspectjtools', version: '1.7.0'
+
+	// cache
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
 
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

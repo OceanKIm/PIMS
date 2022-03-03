@@ -1,8 +1,10 @@
 package com.pims.api.domain.etc.service;
 
 import com.pims.api.cont.Const;
+import com.pims.api.domain.common.code.ResultCode;
 import com.pims.api.domain.etc.entity.ConfigEntity;
 import com.pims.api.domain.etc.repository.ConfigRepository;
+import com.pims.api.exception.CustomResponseException;
 import com.pims.api.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -10,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * ConfigService
@@ -25,6 +28,21 @@ import java.util.List;
 public class ConfigService {
 
     private final ConfigRepository configRepository;
+
+    /**
+     * Service
+     * 단건 설정 정보를 조회한다.
+     *
+     * @param id config table pk
+     * @return  ConfigEntity
+    */
+    public ConfigEntity selectConfigInfo(Integer id) {
+        Optional<ConfigEntity> optional = configRepository.findById(id);
+        return optional.orElseThrow(() -> new CustomResponseException(ResultCode.NOT_TOKEN_ERROR));
+    }
+
+
+
 
     /**
      * 기본 설정값 조회 서버 글로벌 저장 Service

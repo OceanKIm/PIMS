@@ -32,6 +32,9 @@ public enum ResultCode {
     UNSUPPORTED_TOKEN_ERROR("E6004", MessageCode.RESULT_CODE_UNSUPPORTED_TOKEN_ERROR),
     ARGUMENT_TOKEN_ERROR("E6005", MessageCode.RESULT_CODE_ARGUMENT_TOKEN_ERROR);
 
+    // 로직 오류
+
+
 
     private final String code;
     private final MessageCode messageCode;
@@ -48,7 +51,6 @@ public enum ResultCode {
     public MessageCode getMessageCode() {
         return messageCode;
     }
-
 }
 
 
