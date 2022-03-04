@@ -2,6 +2,7 @@ package com.pims.api.utils;
 
 
 import com.pims.api.resolver.CustomLocaleResolver;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -18,14 +19,13 @@ import javax.servlet.http.HttpServletRequest;
  * @version 1.0.0
  * 작성일 2022-02-24
 **/
+@RequiredArgsConstructor
 @Component
 public class MessageUtils {
 
-    @Autowired
-    private MessageSource messageSource;
+    private final MessageSource messageSource;
 
-    @Autowired
-    private CustomLocaleResolver customLocaleResolver;
+    private final CustomLocaleResolver customLocaleResolver;
 
 
     /**

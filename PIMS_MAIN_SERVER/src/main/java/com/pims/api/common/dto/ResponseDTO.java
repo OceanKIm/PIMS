@@ -1,4 +1,4 @@
-package com.pims.api.domain.common.dto;
+package com.pims.api.common.dto;
 
 import lombok.Data;
 
@@ -14,9 +14,13 @@ import lombok.Data;
 public class ResponseDTO {
 
     private Integer statusCode;                                 // HTTP 상태 코드
+
     private String statusMessage;                               // HTTP 메시지
+
     private String resultCode;                                  // API  결과 코드
+
     private String message;                                     // API  메시지
+
     private Object res;                                         // API  응답 데이터
 
 }

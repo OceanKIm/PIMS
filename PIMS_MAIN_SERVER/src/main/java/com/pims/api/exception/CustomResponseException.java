@@ -1,12 +1,9 @@
 package com.pims.api.exception;
 
-import com.pims.api.domain.common.code.ResultCode;
-import com.pims.api.utils.MessageUtils;
+import com.pims.api.cont.ResultCode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 
 /**
  * CustomResponseException

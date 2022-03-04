@@ -1,7 +1,7 @@
 package com.pims.api.domain.etc.service;
 
 import com.pims.api.cont.Const;
-import com.pims.api.domain.common.code.ResultCode;
+import com.pims.api.cont.ResultCode;
 import com.pims.api.domain.etc.entity.ConfigEntity;
 import com.pims.api.domain.etc.repository.ConfigRepository;
 import com.pims.api.exception.CustomResponseException;

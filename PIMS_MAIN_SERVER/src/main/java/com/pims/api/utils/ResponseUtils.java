@@ -1,10 +1,11 @@
 package com.pims.api.utils;
 
-import com.pims.api.domain.common.code.MessageCode;
-import com.pims.api.domain.common.code.ResultCode;
-import com.pims.api.domain.common.dto.ResponseDTO;
+import com.pims.api.cont.MessageCode;
+import com.pims.api.cont.ResultCode;
+import com.pims.api.common.dto.ResponseDTO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -23,11 +24,11 @@ import javax.servlet.http.HttpServletRequest;
  * 작성일 2022-02-26
 **/
 @Log4j2
+@RequiredArgsConstructor
 @Component
 public class ResponseUtils {
 
-    @Autowired
-    private MessageUtils messageUtils;
+    private final MessageUtils messageUtils;
     
     /**
      * response 응답값 (전달 데이터 있을 경우)
@@ -111,7 +112,6 @@ public class ResponseUtils {
         return new ResponseEntity<>(responseDTO, status);
     }
 
-
     /**
      * API CALL 성공 (response 있을경우)
      *
@@ -159,7 +159,7 @@ public class ResponseUtils {
     }
 
     /**
-     * 서버 ERROR 200
+     * 서버 ERROR 200 (메세지 코드 할당)
      *
      * @param messageCode 메시지 코드
      * @return ResponseEntity
@@ -169,7 +169,7 @@ public class ResponseUtils {
     }
 
     /**
-     * 서버 ERROR 400
+     * 서버 ERROR 400 (메세지 코드 할당)
      *
      * @param messageCode 메시지 코드
      * @return ResponseEntity
@@ -178,9 +178,8 @@ public class ResponseUtils {
         return error400(messageUtils.getMessage(messageCode.name()));
     }
 
-
     /**
-     * 서버 ERROR 400
+     * 서버 ERROR 400 (동적 문자열 할당)
      *
      * @param messageCode 메시지 코드
      * @param strings     치환될 문자 배열
@@ -191,7 +190,7 @@ public class ResponseUtils {
     }
 
     /**
-     * 서버 ERROR 200
+     * 서버 ERROR 200 (메세지 할당)
      *
      * @param message 메시지 String
      * @return ResponseEntity
@@ -206,7 +205,7 @@ public class ResponseUtils {
     }
 
     /**
-     * 서버 ERROR 400
+     * 서버 ERROR 400 (메세지 할당)
      *
      * @param message 메시지 String
      * @return ResponseEntity
@@ -219,7 +218,6 @@ public class ResponseUtils {
         responseDTO.setStatusCode(HttpStatus.BAD_REQUEST.value());
         return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
     }
-
 
     /**
      * 서버 ERROR 500
@@ -234,7 +232,4 @@ public class ResponseUtils {
         responseDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
         return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-
-
 }

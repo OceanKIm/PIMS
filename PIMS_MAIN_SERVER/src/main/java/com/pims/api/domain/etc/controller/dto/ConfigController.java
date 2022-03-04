@@ -33,6 +33,7 @@ public class ConfigController {
      * Controller
      * : 설정 테이블 정보 단건 조회
      *
+     * @authLevel 5
      * @method  GET
      * @uriPath /etc/config/{id}
      *
@@ -41,18 +42,19 @@ public class ConfigController {
      */
     @RequestMapping(value = "/config/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> selectConfigInfo(@PathVariable Integer id) {
+        ConfigEntity configEntity;
         try {
-            ConfigEntity configEntity = configService.selectConfigInfo(id);
+            configEntity = configService.selectConfigInfo(id);
 
-            System.out.println("==================================================");
-            System.out.println(configEntity);
-            System.out.println("==================================================");
+            // TODO :: entity to json
 
         } catch (CustomResponseException e) {
             return responseUtils.getResponse(e.getResultCode());
+        } catch (Exception e) {
+            log.error("controller error : {}", e.getMessage());
+            return responseUtils.error500();
         }
-
-        return responseUtils.getSuccess();
+        return responseUtils.getSuccess(configEntity);
     }
 
 
@@ -60,10 +62,11 @@ public class ConfigController {
      * Controller
      * : 설정 테이블 정보 리스트 조회
      *
+     * @authLevel 5
      * @method  GET
      * @uriPath /etc/config
      *
-     * @return  org.springframework.http.ResponseEntity<?> 반환설명
+     * @return  org.springframework.http.ResponseEntity<?>
      */
     @RequestMapping(value = "/config", method = RequestMethod.GET)
     public ResponseEntity<?> selectConfigInfoList() {
