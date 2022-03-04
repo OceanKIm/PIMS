@@ -38,11 +38,8 @@ public class ConfigService {
     */
     public ConfigEntity selectConfigInfo(Integer id) {
         Optional<ConfigEntity> optional = configRepository.findById(id);
-        return optional.orElseThrow(() -> new CustomResponseException(ResultCode.NOT_TOKEN_ERROR));
+        return optional.orElseThrow(() -> new CustomResponseException(ResultCode.NON_EXISTENT));
     }
-
-
-
 
     /**
      * 기본 설정값 조회 서버 글로벌 저장 Service

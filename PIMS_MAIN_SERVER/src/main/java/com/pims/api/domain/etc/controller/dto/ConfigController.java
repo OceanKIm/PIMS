@@ -31,7 +31,7 @@ public class ConfigController {
 
     /**
      * Controller
-     * : 설정 테이블 정보 단건 조회
+     * : 설정 테이블 정보 단건 조회 API
      *
      * @authLevel 5
      * @method  GET
@@ -41,26 +41,14 @@ public class ConfigController {
      * @return  org.springframework.http.ResponseEntity<?>
      */
     @RequestMapping(value = "/config/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> selectConfigInfo(@PathVariable Integer id) {
-        ConfigEntity configEntity;
-        try {
-            configEntity = configService.selectConfigInfo(id);
-
-            // TODO :: entity to json
-
-        } catch (CustomResponseException e) {
-            return responseUtils.getResponse(e.getResultCode());
-        } catch (Exception e) {
-            log.error("controller error : {}", e.getMessage());
-            return responseUtils.error500();
-        }
+    public ResponseEntity<?> selectConfigInfo(@PathVariable Integer id) throws Exception {
+        ConfigEntity configEntity = configService.selectConfigInfo(id);
         return responseUtils.getSuccess(configEntity);
     }
 
-
     /**
      * Controller
-     * : 설정 테이블 정보 리스트 조회
+     * : 설정 테이블 정보 리스트 조회 API
      *
      * @authLevel 5
      * @method  GET
@@ -77,6 +65,4 @@ public class ConfigController {
 
         return responseUtils.getSuccess();
     }
-
-
 }

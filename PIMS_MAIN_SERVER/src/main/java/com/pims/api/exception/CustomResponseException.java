@@ -24,6 +24,7 @@ public class CustomResponseException extends RuntimeException {
     private ResultCode resultCode;
 
     public CustomResponseException(ResultCode resultCode) {
+        super(); // TODO check
         this.resultCode = resultCode;
     }
 }
