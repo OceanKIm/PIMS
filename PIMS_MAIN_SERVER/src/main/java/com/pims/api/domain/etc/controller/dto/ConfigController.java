@@ -41,7 +41,7 @@ public class ConfigController {
      * @return  org.springframework.http.ResponseEntity<?>
      */
     @RequestMapping(value = "/config/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> selectConfigInfo(@PathVariable Integer id) throws Exception {
+    public ResponseEntity<?> selectConfigInfo(@PathVariable Integer id) {
         ConfigEntity configEntity = configService.selectConfigInfo(id);
         return responseUtils.getSuccess(configEntity);
     }
