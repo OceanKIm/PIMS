@@ -74,7 +74,10 @@ dependencies {
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	testImplementation 'org.springframework.security:spring-security-test'
 
-	// mysql
+	// maria db
+	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.0.3'
+
+	// mysql connector
 	runtimeOnly 'mysql:mysql-connector-java:8.0.21'
 
 	// lombok
