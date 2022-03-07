@@ -1,4 +1,4 @@
-package com.pims.api.common.dto;
+package com.pims.api.domain.common.dto;
 
 import lombok.Data;
 

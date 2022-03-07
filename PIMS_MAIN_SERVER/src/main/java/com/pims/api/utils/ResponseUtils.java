@@ -2,7 +2,7 @@ package com.pims.api.utils;
 
 import com.pims.api.cont.MessageCode;
 import com.pims.api.cont.ResultCode;
-import com.pims.api.common.dto.ResponseDTO;
+import com.pims.api.domain.common.dto.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
