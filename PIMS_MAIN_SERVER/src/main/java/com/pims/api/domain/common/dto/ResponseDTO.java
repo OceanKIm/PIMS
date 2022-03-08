@@ -21,6 +21,6 @@ public class ResponseDTO {
 
     private String message;                                     // API  메시지
 
-    private Object res;                                         // API  응답 데이터
+    private Object result;                                      // API  응답 데이터
 
 }

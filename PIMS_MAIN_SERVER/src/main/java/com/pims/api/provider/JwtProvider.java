@@ -189,7 +189,6 @@ public class JwtProvider {
         return request.getHeader(Const.eHTTP_AUTH_HEADER.eAUTH_ACCESS_TOKEN.getHeader());
     }
 
-
     /**
      * 토큰 인증 메소드
      *
@@ -252,7 +251,6 @@ public class JwtProvider {
         });
         return customMap;
     }
-
 
     /**
      * 메시지 유틸 가져오기

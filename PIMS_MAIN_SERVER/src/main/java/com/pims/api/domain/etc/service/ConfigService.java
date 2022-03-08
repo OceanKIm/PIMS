@@ -31,6 +31,16 @@ public class ConfigService {
 
     /**
      * Service
+     * 전체 설정 정보를 조회한다.
+     *
+     * @return  ConfigEntity
+     */
+    public List<ConfigEntity> selectConfigInfo() {
+        return configRepository.findAll();
+    }
+
+    /**
+     * Service
      * 단건 설정 정보를 조회한다.
      *
      * @param id config table pk
@@ -47,7 +57,7 @@ public class ConfigService {
     public void loadServerConfig() {
         String key = null;
         String value = null;
-        List<ConfigEntity> resultList = configRepository.findAll();
+        List<ConfigEntity> resultList = selectConfigInfo();
         try {
             for (ConfigEntity config : resultList) {
                 if (null != config.getPimsKey()) {

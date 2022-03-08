@@ -40,7 +40,7 @@ import java.util.Arrays;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${SERVER.REQUEST.HEADERS}")
-    private final String mPropertiesRequestHeader;
+    private String mPropertiesRequestHeader;
 
     @Autowired
     private final JwtProvider jwtProvider;

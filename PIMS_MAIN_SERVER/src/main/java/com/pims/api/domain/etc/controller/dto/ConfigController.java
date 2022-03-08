@@ -3,12 +3,14 @@ package com.pims.api.domain.etc.controller.dto;
 
 import com.pims.api.domain.etc.entity.ConfigEntity;
 import com.pims.api.domain.etc.service.ConfigService;
-import com.pims.api.exception.CustomResponseException;
+
 import com.pims.api.utils.ResponseUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -43,6 +45,7 @@ public class ConfigController {
     @RequestMapping(value = "/config/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> selectConfigInfo(@PathVariable Integer id) {
         ConfigEntity configEntity = configService.selectConfigInfo(id);
+        // TODO check normal entity to json object
         return responseUtils.getSuccess(configEntity);
     }
 
@@ -58,11 +61,7 @@ public class ConfigController {
      */
     @RequestMapping(value = "/config", method = RequestMethod.GET)
     public ResponseEntity<?> selectConfigInfoList() {
-
-
-        System.out.println("========================");
-
-
-        return responseUtils.getSuccess();
+        List<ConfigEntity> resultList = configService.selectConfigInfo();
+        return responseUtils.getSuccess(resultList);
     }
 }

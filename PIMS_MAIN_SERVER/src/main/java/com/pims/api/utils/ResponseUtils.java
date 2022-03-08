@@ -33,14 +33,14 @@ public class ResponseUtils {
     /**
      * response 응답값 (전달 데이터 있을 경우)
      *
-     * @param res        응답데이터
+     * @param result        응답데이터
      * @param resultCode 결과 코드
      * @param status     HTTP 상태
      * @return ResponseEntity
      */
-    public ResponseEntity<ResponseDTO> getResponse(Object res, ResultCode resultCode, HttpStatus status) {
+    public ResponseEntity<ResponseDTO> getResponse(Object result, ResultCode resultCode, HttpStatus status) {
         ResponseDTO responseDTO = new ResponseDTO();
-        responseDTO.setRes(res);
+        responseDTO.setResult(result);
         responseDTO.setResultCode(resultCode.getCode());
         responseDTO.setMessage(messageUtils.getMessage(resultCode.getMessageCode().name()));
         responseDTO.setStatusMessage(status.getReasonPhrase());
@@ -115,12 +115,12 @@ public class ResponseUtils {
     /**
      * API CALL 성공 (response 있을경우)
      *
-     * @param res response 데이터
+     * @param result response 데이터
      * @return ResponseEntity
      */
-    public ResponseEntity<ResponseDTO> getSuccess(Object res) {
+    public ResponseEntity<ResponseDTO> getSuccess(Object result) {
         ResponseDTO responseDTO = new ResponseDTO();
-        responseDTO.setRes(res);
+        responseDTO.setResult(result);
         responseDTO.setResultCode(ResultCode.SUCCESS.getCode());
         responseDTO.setMessage(messageUtils.getMessage(ResultCode.SUCCESS.getMessageCode().name()));
         responseDTO.setStatusMessage(HttpStatus.OK.getReasonPhrase());
