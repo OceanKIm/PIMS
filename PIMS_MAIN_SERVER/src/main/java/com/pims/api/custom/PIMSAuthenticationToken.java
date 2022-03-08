@@ -5,6 +5,14 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
+/**
+ * PIMSAuthenticationToken
+ * : PIMS 인증 토큰 클래스
+ * 
+ * @author hskim
+ * @version 1.0.0
+ * 작성일 2022-03-08
+**/
 public class PIMSAuthenticationToken extends AbstractAuthenticationToken {
 
     private final String jwtToken;

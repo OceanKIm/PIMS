@@ -5,10 +5,19 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * EmployeeEntity
+ * : employee_tb 테이블 entity
+ *
+ * @author hskim
+ * @version 1.0.0
+ * 작성일 2022-03-08
+**/
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @ToString
 @Entity
 @Table(name = "employee_tb")

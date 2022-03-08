@@ -16,6 +16,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * CustomNoGenerator
+ * : 테이블 NO 값 자동 생성을 위한 제너레이터
+ * 
+ * @author hskim
+ * @version 1.0.0
+ * 작성일 2022-03-08
+**/
 public class CustomNoGenerator implements IdentifierGenerator, Configurable {
 
     // 속성값 처리를 위한 Const

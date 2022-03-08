@@ -4,6 +4,8 @@ package com.pims.api.domain.user.controller;
 import com.pims.api.domain.etc.entity.ConfigEntity;
 import com.pims.api.domain.etc.service.ConfigService;
 import com.pims.api.domain.user.controller.dto.EmployeeJoinDto;
+import com.pims.api.domain.user.entity.EmployeeEntity;
+import com.pims.api.domain.user.service.EmployeeService;
 import com.pims.api.utils.ResponseUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -31,7 +33,7 @@ public class EmployeeController {
 
     private final ResponseUtils responseUtils;
 
-    private final ConfigService configService;
+    private final EmployeeService employeeService;
 
     /**
      * Controller
@@ -47,8 +49,8 @@ public class EmployeeController {
     @RequestMapping(value = "/employee", method = RequestMethod.POST)
     public ResponseEntity<?> joinEmployee(@RequestBody @Valid final EmployeeJoinDto employeeJoinDto) {
 
-        System.out.println(employeeJoinDto);
+        EmployeeEntity employeeEntity = employeeService.joinEmployee(employeeJoinDto);
 
-        return responseUtils.getSuccess(employeeJoinDto);
+        return responseUtils.getSuccess(employeeEntity);
     }
 }

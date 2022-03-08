@@ -4,10 +4,19 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * ConfigEntity
+ * : pims_config 테이블 entity
+ *
+ * @author hskim
+ * @version 1.0.0
+ * 작성일 2022-03-08
+**/
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @ToString
 @Entity
 @Table(name = "pims_config")
