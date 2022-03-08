@@ -53,10 +53,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        String adminAuthType = Const.eSECURITY_AUTH_TYPE.eADMIN_AUTH_TYPE.getAuthority();
-        String userAuthType = Const.eSECURITY_AUTH_TYPE.eUSER_AUTH_TYPE.getAuthority();
-        String webOsAuthType = Const.eSECURITY_AUTH_TYPE.eWEB_OS_AUTH_TYPE.getAuthority();
-
+        String superAdmin = Const.USER_ROLE.superAdmin.name();
+        String admin = Const.USER_ROLE.admin.name();
+        String user = Const.USER_ROLE.user.name();
 
         http.httpBasic().disable()
                 .csrf().disable()

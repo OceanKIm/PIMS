@@ -64,8 +64,8 @@ public class LoggingUtils {
      * @param request   요청 객체
      */
     private static void showRequestLog(Signature signature, HttpServletRequest request) {
-        boolean isServerAopLog = "Y".equals(Const.G_SERVER_CONFIG.get(Const.eCONFIG_KEY.IS_SERVER_AOP_LOG.name()));
-        boolean isServerAopReqHeaderLog = "Y".equals(Const.G_SERVER_CONFIG.get(Const.eCONFIG_KEY.IS_SERVER_AOP_REQ_LOG_HEADER.name()));
+        boolean isServerAopLog = "Y".equals(Const.G_SERVER_CONFIG.get(Const.CONFIG_KEY.IS_SERVER_AOP_LOG.name()));
+        boolean isServerAopReqHeaderLog = "Y".equals(Const.G_SERVER_CONFIG.get(Const.CONFIG_KEY.IS_SERVER_AOP_REQ_LOG_HEADER.name()));
         if (!isServerAopLog) return;
 
         String controllerName = signature.getDeclaringType().getSimpleName();
@@ -102,7 +102,7 @@ public class LoggingUtils {
      * @param responseEntity 응답 객체
      */
     private static void showResponseLog(ResponseEntity<?> responseEntity) {
-        boolean isServerAopLog = "Y".equals(Const.G_SERVER_CONFIG.get(Const.eCONFIG_KEY.IS_SERVER_AOP_LOG.name()));
+        boolean isServerAopLog = "Y".equals(Const.G_SERVER_CONFIG.get(Const.CONFIG_KEY.IS_SERVER_AOP_LOG.name()));
         if (!isServerAopLog) return;
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String strResult = gson.toJson(responseEntity);

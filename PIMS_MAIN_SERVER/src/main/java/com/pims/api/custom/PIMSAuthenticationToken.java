@@ -10,7 +10,6 @@ public class PIMSAuthenticationToken extends AbstractAuthenticationToken {
     private final String jwtToken;
     private final String address;
 
-
     public PIMSAuthenticationToken(String jwtToken, String address, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.jwtToken = jwtToken;

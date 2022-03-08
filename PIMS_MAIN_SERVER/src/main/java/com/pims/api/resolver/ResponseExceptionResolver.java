@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -122,21 +123,21 @@ public class ResponseExceptionResolver {
     }
 
     /**
-     * 유효성 검사 실패 Exception TODO :: 수정 해야함. (DTO 객체를 받는 기준)
+     * DTO 유효성 검사 실패 Exception
      *
      * @param e ArgumentNotValidException
      * @return ResponseEntity<?> Error 응답
      */
-    @ExceptionHandler({ArgumentNotValidException.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Object argumentNotValidException(ArgumentNotValidException e) {
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    public ResponseEntity<?> methodArgumentNotValidException(MethodArgumentNotValidException e) {
+
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         ArrayList<HashMap<String, String>> errorList = new ArrayList<>();
 
         for (FieldError error : fieldErrors) {
             HashMap<String, String> map = new HashMap<>();
-            map.put("file", error.getField());
-            map.put("message", messageUtils.getMessage(error.getDefaultMessage()));
+            map.put("field", error.getField());
+            map.put("message", error.getDefaultMessage());
             errorList.add(map);
         }
 
@@ -144,6 +145,7 @@ public class ResponseExceptionResolver {
         log.error("{}", errorList);
 
         ResponseEntity<?> response = responseUtils.getResponse(errorList, ResultCode.BAD_REQUEST_ERROR, HttpStatus.BAD_REQUEST);
+
         LoggingUtils.showCallLog(response);
         return response;
     }

@@ -3,7 +3,6 @@ package com.pims.api.cont;
 import com.pims.api.custom.CustomMap;
 
 import java.util.Arrays;
-import java.util.HashMap;
 
 /**
  * Const
@@ -20,7 +19,7 @@ public class Const {
     /**
      * DB 설정테이블 키
      */
-    public enum eCONFIG_KEY {
+    public enum CONFIG_KEY {
         ACCESS_TOKEN_EXP_HOUR,
         ACCESS_TOKEN_EXP_DAY,
         REFRESH_TOKEN_EXP_HOUR,
@@ -33,11 +32,11 @@ public class Const {
     /**
      * 패스워드 알고리즘
      */
-    public enum ePASSWORD_ENCRYPTION_ALGORITHM_TYPE {
+    public enum PASSWORD_ENCRYPTION_ALGORITHM_TYPE {
         SHA256,
         MD5;
         public static String findName(String findName) {
-            ePASSWORD_ENCRYPTION_ALGORITHM_TYPE eType = Arrays.stream(ePASSWORD_ENCRYPTION_ALGORITHM_TYPE.values()).filter(type -> findName.equals(type.name())).findAny().orElse(null);
+            PASSWORD_ENCRYPTION_ALGORITHM_TYPE eType = Arrays.stream(PASSWORD_ENCRYPTION_ALGORITHM_TYPE.values()).filter(type -> findName.equals(type.name())).findAny().orElse(null);
             if (null == eType) {
                 return null;
             }
@@ -47,15 +46,15 @@ public class Const {
 
 
     /**
-     * 인중  헤더 타입 enum
+     * 인중 헤더 타입 enum
      */
-    public enum eHTTP_AUTH_HEADER {
+    public enum HTTP_AUTH_HEADER {
         eAUTH_ACCESS_TOKEN("X-AUTH-ACCESS-TOKEN"),
         eAUTH_ID("X-AUTH-ID");
 
         private final String header;
 
-        eHTTP_AUTH_HEADER(String authority) {
+        HTTP_AUTH_HEADER(String authority) {
             this.header = authority;
         }
 
@@ -64,7 +63,7 @@ public class Const {
         }
 
         public static String getHeader(String header) {
-            eHTTP_AUTH_HEADER tbs = Arrays.stream(eHTTP_AUTH_HEADER.values()).filter(tb -> tb.header.equals(header)).findAny().orElse(null);
+            HTTP_AUTH_HEADER tbs = Arrays.stream(HTTP_AUTH_HEADER.values()).filter(tb -> tb.header.equals(header)).findAny().orElse(null);
             if (tbs == null) {
                 return null;
             }
@@ -75,100 +74,32 @@ public class Const {
     /**
      * JWT 토큰 발급 페이로드 키 enum
      */
-    public enum eJWT_KEY {
+    public enum JWT_KEY {
         type,
         exp,
-        level,
-        inflow,
-        applyNo
+        level
     }
 
     /**
-     * 사용자 인증 타입 enum
+     * 사용자 권한 enum
      */
-    public enum eSECURITY_AUTH_TYPE {
-        eADMIN_AUTH_TYPE("AUTH_TYPE_ADMIN", 10),
-        eUSER_AUTH_TYPE("AUTH_TYPE_USER", 1),
-        eWEB_OS_AUTH_TYPE("AUTH_TYPE_WEB_OS", 1);
+    public enum USER_ROLE {
+        superAdmin(10),
+        admin(5),
+        user(1);
 
-
-        private final String authority;
         private final int userLevel;
 
-        eSECURITY_AUTH_TYPE(String authority, int userLevel) {
-            this.authority = authority;
+        USER_ROLE(int userLevel) {
             this.userLevel = userLevel;
         }
-
-        public String getAuthority() {
-            return this.authority;
-        }
-
         public int getUserLevel() {
             return this.userLevel;
         }
 
-        public static String getAuthType(String authority) {
-            eSECURITY_AUTH_TYPE tbs = Arrays.stream(eSECURITY_AUTH_TYPE.values()).filter(tb -> tb.authority.equals(authority)).findAny().orElse(null);
-            if (tbs == null) {
-                return null;
-            }
-            return tbs.getAuthority();
+        public static USER_ROLE getUserRole(int userLevel) {
+            return Arrays.stream(USER_ROLE.values()).filter(tb -> tb.userLevel == userLevel).findAny().orElse(null);
         }
 
-        public static eSECURITY_AUTH_TYPE getAuthType(int userLevel) {
-            return Arrays.stream(eSECURITY_AUTH_TYPE.values()).filter(tb -> tb.userLevel == userLevel).findAny().orElse(null);
-        }
-    }
-
-    /**
-     * ORDER BY TYPE ENUM
-     */
-    public enum eORDER_BY_TYPE {
-        ASC("ASC"),
-        DESC("DESC");
-
-        private final String type;
-
-        eORDER_BY_TYPE(String type) {
-            this.type = type;
-        }
-
-        public static String findOrderType(String type) {
-            eORDER_BY_TYPE enumType = Arrays.asList(eORDER_BY_TYPE.values()).stream().filter(tb -> tb.type.equals(type)).findAny().orElse(null);
-            if (enumType == null) {
-                return eORDER_BY_TYPE.ASC.type;
-            }
-            return enumType.type;
-        }
-    }
-
-    /**
-     * QNA ORDER BY ENUM
-     */
-    public enum eQNA_ORDER_BY {
-        eREG("LGB_REG_DT", "reg"),
-        eHIT("LGB_QNA_HIT_COUNT", "hit"),
-        eComment("LGB_COMMENT_COUNT", "comment"),
-        eRecommend("LGB_RECOMMEND_COUNT", "recommend"),
-        eNotRecommend("LGB_NOT_RECOMMEND_COUNT", "notRecommend");
-
-        private final String orderBy;
-        private final String code;
-
-        eQNA_ORDER_BY(String orderBy, String code) {
-            this.orderBy = orderBy;
-            this.code = code;
-        }
-
-        public static String findOrder(String code) {
-
-            eQNA_ORDER_BY order = Arrays.asList(eQNA_ORDER_BY.values()).stream().filter(tb -> tb.code.equals(code)).findAny().orElse(null);
-
-            if (order == null) {
-                return eQNA_ORDER_BY.eREG.orderBy;
-            }
-            return order.orderBy;
-        }
     }
 }

@@ -10,7 +10,6 @@ import com.pims.api.utils.Utils;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -58,61 +57,23 @@ public class JwtProvider {
     /**
      * 로그인 인증 토큰 DTO 만들기
      *
-     * @param authType   API 인증타입
-     * @param inflowType 유입타입
+     * @param userRole   API 인증타입
      * @return TokenDTO 토큰 결과 DTO
      */
-    public TokenDTO generateTokenDto(Const.eSECURITY_AUTH_TYPE authType, String inflowType) {
+    public TokenDTO generateTokenDto(Const.USER_ROLE userRole) {
 
         Date now = new Date();
-        int accessTokenHour = (int) Const.G_SERVER_CONFIG.get(Const.eCONFIG_KEY.ACCESS_TOKEN_EXP_HOUR.name());
-        int refreshTokenHour = (int) Const.G_SERVER_CONFIG.get(Const.eCONFIG_KEY.ACCESS_TOKEN_EXP_HOUR.name());
+        int accessTokenHour = (int) Const.G_SERVER_CONFIG.get(Const.CONFIG_KEY.ACCESS_TOKEN_EXP_HOUR.name());
+        int refreshTokenHour = (int) Const.G_SERVER_CONFIG.get(Const.CONFIG_KEY.ACCESS_TOKEN_EXP_HOUR.name());
         long accessTokenExpiration = (accessTokenHour * 60L) * 60 * 1000L;
         long refreshTokenExpiration = (refreshTokenHour * 60L) * 60 * 1000L;
 
         // Access Token 생성
-        //Date accessTokenExpires = new Date(now.getTime() + (accessTokenExpiration * 60) * 60 * 1000L);
         Date accessTokenExpires = new Date(now.getTime() + accessTokenExpiration);
         String accessToken = Jwts.builder()
-                .claim(Const.eJWT_KEY.type.name(), authType.getAuthority())
-                .claim(Const.eJWT_KEY.exp.name(), accessTokenExpires)
-                .claim(Const.eJWT_KEY.level.name(), authType.getUserLevel())
-                .claim(Const.eJWT_KEY.inflow.name(), inflowType)
-                .setExpiration(accessTokenExpires)
-                .signWith(SignatureAlgorithm.HS256, secretKey)
-                .compact();
-
-        // Refresh Token 생성
-        String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now.getTime() + refreshTokenExpiration))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
-                .compact();
-
-        return TokenDTO.builder().accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .expires(accessTokenExpires.getTime())
-                .build();
-    }
-
-    /**
-     * 커뮤니티 인증 토큰 DTO 만들기
-     *
-     * @param applyNo   베타 지원 일련번호
-     * @return TokenDTO 토큰 결과 DTO
-     */
-    public TokenDTO generateCommunityAuthTokenDto(Integer applyNo) {
-
-        Date now = new Date();
-        int accessTokenDay = (int) Const.G_SERVER_CONFIG.get(Const.eCONFIG_KEY.ACCESS_TOKEN_EXP_DAY.name());
-        int refreshTokenDay = (int) Const.G_SERVER_CONFIG.get(Const.eCONFIG_KEY.ACCESS_TOKEN_EXP_DAY.name());
-        long accessTokenExpiration = (accessTokenDay * 24 * 60L) * 60 * 1000L;
-        long refreshTokenExpiration = (refreshTokenDay * 24 * 60L) * 60 * 1000L;
-
-        // Access Token 생성
-        Date accessTokenExpires = new Date(now.getTime() + accessTokenExpiration);
-        String accessToken = Jwts.builder()
-                .claim(Const.eJWT_KEY.applyNo.name(), applyNo)
-                .claim(Const.eJWT_KEY.exp.name(), accessTokenExpires)
+                .claim(Const.JWT_KEY.type.name(), userRole.name())
+                .claim(Const.JWT_KEY.exp.name(), accessTokenExpires)
+                .claim(Const.JWT_KEY.level.name(), userRole.getUserLevel())
                 .setExpiration(accessTokenExpires)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
@@ -186,7 +147,7 @@ public class JwtProvider {
      * @return 인증 DTO 리턴합니다.
      */
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader(Const.eHTTP_AUTH_HEADER.eAUTH_ACCESS_TOKEN.getHeader());
+        return request.getHeader(Const.HTTP_AUTH_HEADER.eAUTH_ACCESS_TOKEN.getHeader());
     }
 
     /**
@@ -205,7 +166,7 @@ public class JwtProvider {
         // 아이피 맵핑
         CustomMap customMap = new CustomMap();
         customMap.put("accessToken", token);
-//      customMap.put("address", address);
+        customMap.put("address", address);
         /*
         HashMap<String, Object> loginMap = userService.selectLoginInfo(customMap);
         if (null == loginMap) {
@@ -218,10 +179,10 @@ public class JwtProvider {
             }
         }
         */
-        int userLevel = (int) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get(Const.eJWT_KEY.level.name());
-        Const.eSECURITY_AUTH_TYPE userAuthType = Const.eSECURITY_AUTH_TYPE.getAuthType(userLevel);
+        int userLevel = (int) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get(Const.JWT_KEY.level.name());
+        Const.USER_ROLE userRole = Const.USER_ROLE.getUserRole(userLevel);
         ArrayList<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(userAuthType.getAuthority()));
+        authorities.add(new SimpleGrantedAuthority(userRole.name()));
         return new PIMSAuthenticationToken(token, address, authorities);
     }
 

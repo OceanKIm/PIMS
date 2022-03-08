@@ -1,11 +1,9 @@
 package com.pims.api.domain.user.entity;
 
+import com.pims.api.cont.Const;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Builder
 @AllArgsConstructor
@@ -17,6 +15,7 @@ import javax.persistence.Table;
 public class EmployeeEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO) // TODO modify
     @Column(name = "emp_no", nullable = false)
     private Integer id;
 
@@ -26,17 +25,18 @@ public class EmployeeEntity {
     @Column(name = "emp_pwd", nullable = false, length = 200)
     private String empPwd;
 
-    @Column(name = "sys_auth_level", nullable = false)
-    private Integer sysAuthLevel;
+    @Column(name = "emp_role", nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    private Const.USER_ROLE role;
 
     @Column(name = "emp_nm", nullable = false, length = 10)
     private String empNm;
 
     @Column(name = "rank_cd", nullable = false)
-    private Integer rankCd;
+    private String rankCd;
 
     @Column(name = "team_cd", nullable = false)
-    private Integer teamCd;
+    private String teamCd;
 
     @Column(name = "emp_hp", length = 11)
     private String empHp;
@@ -45,7 +45,7 @@ public class EmployeeEntity {
     private String isDeveloper;
 
     @Column(name = "dev_pos_cd")
-    private Integer devPosCd;
+    private String devPosCd;
 
     @Column(name = "dev_month")
     private Integer devMonth;
