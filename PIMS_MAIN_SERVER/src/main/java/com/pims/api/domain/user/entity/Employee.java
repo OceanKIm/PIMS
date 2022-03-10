@@ -22,12 +22,12 @@ import javax.persistence.*;
 @ToString
 @Entity
 @Table(name = "employee_tb")
-public class EmployeeEntity {
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // TODO modify
     @Column(name = "emp_no", nullable = false)
-    private Integer id;
+    private Integer empNo;
 
     @Column(name = "emp_id", nullable = false, length = 45)
     private String empId;

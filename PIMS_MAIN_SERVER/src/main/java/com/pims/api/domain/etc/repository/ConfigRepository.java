@@ -1,6 +1,6 @@
 package com.pims.api.domain.etc.repository;
 
-import com.pims.api.domain.etc.entity.ConfigEntity;
+import com.pims.api.domain.etc.entity.Config;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -11,5 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @version 1.0.0
  * 작성일 2022-03-08
 **/
-public interface ConfigRepository extends JpaRepository<ConfigEntity, Integer> {
+public interface ConfigRepository extends JpaRepository<Config, Integer> {
 }

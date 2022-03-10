@@ -17,11 +17,7 @@ import java.security.NoSuchAlgorithmException;
  * 작성일 2022-03-10
 **/
 @Log4j2
-@Component
 public class EncryptUtil {
-
-    @Value("${SERVER.PASSWORD.ENCRYPT}")
-    private String mEncryptType;
 
     /**
      * MD5 암호화
@@ -30,7 +26,7 @@ public class EncryptUtil {
      * @return String MD5 암호화 데이터
      * @throws NoSuchAlgorithmException throws
      */
-    public String makeMD5(String message) throws NoSuchAlgorithmException {
+    public static String makeMD5(String message) throws NoSuchAlgorithmException {
 
         String md5Text = "";
 
@@ -59,13 +55,12 @@ public class EncryptUtil {
      * @return SHA-256 암호화 메시지
      * @throws NoSuchAlgorithmException throws
      */
-    public String makeSHA256(String message) throws NoSuchAlgorithmException {
+    public static String makeSHA256(String message) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(message.getBytes());
 
         return bytesToHex(md.digest());
     }
-
 
     /**
      * SHA-512 암호화 메소드
@@ -74,7 +69,7 @@ public class EncryptUtil {
      * @return SHA-512 암호화 메시지
      * @throws NoSuchAlgorithmException throws
      */
-    public String makeSHA512(String message) throws NoSuchAlgorithmException {
+    public static String makeSHA512(String message) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-512");
         md.update(message.getBytes());
         return bytesToHex(md.digest());
@@ -86,7 +81,7 @@ public class EncryptUtil {
      * @param bytes 
      * @return  String
     */
-    private String bytesToHex(byte[] bytes) {
+    private static String bytesToHex(byte[] bytes) {
         StringBuilder builder = new StringBuilder();
         for (byte b : bytes) {
             builder.append(String.format("%02x", b));
@@ -100,7 +95,7 @@ public class EncryptUtil {
      * @param message 
      * @return  boolean
     */
-    public boolean isSHA256(String message) {
+    public static boolean isSHA256(String message) {
         return message.length() == 64;
     }
 
@@ -110,7 +105,7 @@ public class EncryptUtil {
      * @param message 
      * @return  boolean
     */
-    public boolean isMD5(String message) {
+    public static boolean isMD5(String message) {
         return message.length() == 32;
     }
 

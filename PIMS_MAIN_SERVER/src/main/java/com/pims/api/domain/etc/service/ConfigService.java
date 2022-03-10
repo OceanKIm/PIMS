@@ -2,7 +2,7 @@ package com.pims.api.domain.etc.service;
 
 import com.pims.api.cont.Const;
 import com.pims.api.cont.ResultCode;
-import com.pims.api.domain.etc.entity.ConfigEntity;
+import com.pims.api.domain.etc.entity.Config;
 import com.pims.api.domain.etc.repository.ConfigRepository;
 import com.pims.api.exception.CustomResponseException;
 import com.pims.api.utils.Utils;
@@ -37,7 +37,7 @@ public class ConfigService {
      * @return  ConfigEntity
      */
     @Transactional(readOnly = true)
-    public List<ConfigEntity> selectConfigInfo() {
+    public List<Config> selectConfigInfo() {
         return configRepository.findAll();
     }
 
@@ -49,8 +49,8 @@ public class ConfigService {
      * @return  ConfigEntity
     */
     @Transactional(readOnly = true)
-    public ConfigEntity selectConfigInfo(Integer id) {
-        Optional<ConfigEntity> optional = configRepository.findById(id);
+    public Config selectConfigInfo(Integer id) {
+        Optional<Config> optional = configRepository.findById(id);
         return optional.orElseThrow(() -> new CustomResponseException(ResultCode.NON_EXISTENT));
     }
 
@@ -61,9 +61,9 @@ public class ConfigService {
     public void loadServerConfig() {
         String key = null;
         String value = null;
-        List<ConfigEntity> resultList = selectConfigInfo();
+        List<Config> resultList = selectConfigInfo();
         try {
-            for (ConfigEntity config : resultList) {
+            for (Config config : resultList) {
                 if (null != config.getPimsKey()) {
                     key = config.getPimsKey();
                 }

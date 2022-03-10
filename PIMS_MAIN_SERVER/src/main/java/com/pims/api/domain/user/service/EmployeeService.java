@@ -2,12 +2,11 @@ package com.pims.api.domain.user.service;
 
 import com.pims.api.custom.CustomModelMapper;
 import com.pims.api.domain.user.controller.dto.EmployeeJoinDto;
-import com.pims.api.domain.user.entity.EmployeeEntity;
+import com.pims.api.domain.user.entity.Employee;
 import com.pims.api.domain.user.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * EmployeeService
@@ -37,14 +36,25 @@ public class EmployeeService {
     }
 
     /**
+     * 사원 HP 존재 유무 체크 Service.
+     *
+     * @param empHp 사원 HP
+     * @return boolean
+     */
+    public boolean existsByEmpHp(String empHp) {
+        return employeeRepository.existsByEmpHp(empHp);
+    }
+
+
+    /**
      * 회원 등록 Service
      *
      * @param employeeJoinDto 회원가입 DTO
      * @return  EmployeeEntity
     */
-    public EmployeeEntity joinEmployee(EmployeeJoinDto employeeJoinDto) {
-        EmployeeEntity employeeEntity = customModelMapper.strictMapper().map(employeeJoinDto, EmployeeEntity.class);
-        return employeeRepository.save(employeeEntity);
+    public Employee joinEmployee(EmployeeJoinDto employeeJoinDto) {
+        Employee employee = customModelMapper.strictMapper().map(employeeJoinDto, Employee.class);
+        return employeeRepository.save(employee);
     }
 
 }

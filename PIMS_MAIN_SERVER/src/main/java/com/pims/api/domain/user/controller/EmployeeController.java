@@ -2,20 +2,18 @@ package com.pims.api.domain.user.controller;
 
 
 import com.pims.api.cont.ResultCode;
-import com.pims.api.domain.etc.entity.ConfigEntity;
-import com.pims.api.domain.etc.service.ConfigService;
 import com.pims.api.domain.user.controller.dto.EmployeeJoinDto;
-import com.pims.api.domain.user.entity.EmployeeEntity;
+import com.pims.api.domain.user.controller.dto.EmployeeLoginDto;
 import com.pims.api.domain.user.service.EmployeeService;
+import com.pims.api.utils.EncryptUtil;
 import com.pims.api.utils.ResponseUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.security.NoSuchAlgorithmException;
 
 
 /**
@@ -48,17 +46,51 @@ public class EmployeeController {
      * @return  org.springframework.http.ResponseEntity<?>
      */
     @RequestMapping(value = "/employee", method = RequestMethod.POST)
-    public ResponseEntity<?> joinEmployee(@RequestBody @Valid final EmployeeJoinDto employeeJoinDto) {
+    public ResponseEntity<?> joinEmployee(@RequestBody @Valid final EmployeeJoinDto employeeJoinDto) throws NoSuchAlgorithmException {
 
-        // 중복 회원 체크
+        // email 존재 체크
         if (employeeService.existsByEmpId(employeeJoinDto.getEmpId())) {
-            return responseUtils.getResponse(ResultCode.VALID_DUPLICATE_USER);
+            return responseUtils.getResponse(ResultCode.DUPLICATE_EMAIL);
+        }
+
+        // HP 존재 체크
+        if (employeeService.existsByEmpHp(employeeJoinDto.getEmpHp())) {
+            return responseUtils.getResponse(ResultCode.DUPLICATE_HP);
         }
 
         // TODO 이메일 인증 후 회원가입.
 
-        EmployeeEntity employeeEntity = employeeService.joinEmployee(employeeJoinDto);
+        // 비밀번호 암호화
+        employeeJoinDto.setEmpPwd(EncryptUtil.makeSHA256(employeeJoinDto.getEmpPwd()));
 
-        return responseUtils.getSuccess(employeeEntity);
+        employeeService.joinEmployee(employeeJoinDto);
+
+        return responseUtils.getSuccess(ResultCode.SUCCESS);
     }
+
+    /**
+     * Controller
+     * : 사용자 로그인 API
+     *
+     * @authLevel 1
+     * @method POST
+     * @uriPath /user/employee/login
+     *
+     * @param   employeeLoginDto 로그인 DTO
+     * @return  org.springframework.http.ResponseEntity<?>
+     */
+    @RequestMapping(value = "/employee/login", method = RequestMethod.POST)
+    public ResponseEntity<?> loginEmployee(@RequestBody @Valid final EmployeeLoginDto employeeLoginDto) throws NoSuchAlgorithmException {
+
+        // email 존재 체크
+        if (!employeeService.existsByEmpId(employeeLoginDto.getEmpId())) {
+            return responseUtils.getResponse(ResultCode.NON_EXISTENT_EMAIL_ID);
+        }
+
+        employeeLoginDto.setEmpPwd(EncryptUtil.makeSHA256(employeeLoginDto.getEmpPwd()));
+
+        return responseUtils.getSuccess(ResultCode.SUCCESS);
+    }
+
+
 }

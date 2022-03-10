@@ -20,11 +20,11 @@ import javax.persistence.*;
 @ToString
 @Entity
 @Table(name = "pims_config")
-public class ConfigEntity {
+public class Config {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "config_no", nullable = false)
-    private Integer id;
+    private Integer configNo;
 
     @Column(name = "pims_key", nullable = false, length = 50)
     private String pimsKey;

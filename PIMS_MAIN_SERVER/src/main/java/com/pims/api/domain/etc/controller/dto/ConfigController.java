@@ -1,7 +1,7 @@
 package com.pims.api.domain.etc.controller.dto;
 
 
-import com.pims.api.domain.etc.entity.ConfigEntity;
+import com.pims.api.domain.etc.entity.Config;
 import com.pims.api.domain.etc.service.ConfigService;
 
 import com.pims.api.utils.ResponseUtils;
@@ -44,9 +44,9 @@ public class ConfigController {
      */
     @RequestMapping(value = "/config/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> selectConfigInfo(@PathVariable Integer id) {
-        ConfigEntity configEntity = configService.selectConfigInfo(id);
+        Config config = configService.selectConfigInfo(id);
         // TODO check normal entity to json object
-        return responseUtils.getSuccess(configEntity);
+        return responseUtils.getSuccess(config);
     }
 
     /**
@@ -61,7 +61,7 @@ public class ConfigController {
      */
     @RequestMapping(value = "/config", method = RequestMethod.GET)
     public ResponseEntity<?> selectConfigInfoList() {
-        List<ConfigEntity> resultList = configService.selectConfigInfo();
+        List<Config> resultList = configService.selectConfigInfo();
         return responseUtils.getSuccess(resultList);
     }
 }
