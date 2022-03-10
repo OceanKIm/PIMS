@@ -49,7 +49,7 @@ public class DateUtils {
     /**
      * Date Time format
      */
-    public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm";
+    public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
     /**
      * Date HMS format
      */

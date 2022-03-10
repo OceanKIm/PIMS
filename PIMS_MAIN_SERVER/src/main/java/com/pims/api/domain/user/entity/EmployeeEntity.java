@@ -1,6 +1,7 @@
 package com.pims.api.domain.user.entity;
 
 import com.pims.api.cont.Const;
+import com.pims.api.utils.DateUtils;
 import lombok.*;
 
 import javax.persistence.*;
@@ -36,7 +37,7 @@ public class EmployeeEntity {
 
     @Column(name = "emp_role", nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    private Const.USER_ROLE role;
+    private Const.USER_ROLE role = Const.USER_ROLE.user;
 
     @Column(name = "emp_nm", nullable = false, length = 10)
     private String empNm;
@@ -60,12 +61,12 @@ public class EmployeeEntity {
     private Integer devMonth;
 
     @Column(name = "emp_st", length = 2)
-    private String empSt;
+    private String empSt = "R";
 
     @Column(name = "reg_dt", length = 45)
-    private String regDt;
+    private String regDt = DateUtils.getCurrentDay(DateUtils.DATE_TIME_PATTERN);
 
     @Column(name = "mod_dt", length = 45)
-    private String modDt;
+    private String modDt = DateUtils.getCurrentDay(DateUtils.DATE_TIME_PATTERN);
 
 }

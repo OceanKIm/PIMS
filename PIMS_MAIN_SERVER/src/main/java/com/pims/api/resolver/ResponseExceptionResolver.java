@@ -117,7 +117,11 @@ public class ResponseExceptionResolver {
     @ExceptionHandler(value = { ConstraintViolationException.class, DataIntegrityViolationException.class})
     protected ResponseEntity<?> handleDataException(Exception e) {
         log.error(e.getMessage());
-        ResponseEntity<?> response = responseUtils.getResponse(ResultCode.SERVER_ERROR); // TODO 수정 필요
+
+        HashMap<String, String> resultMap = new HashMap<>();
+        resultMap.put("cause", e.getLocalizedMessage());
+        ResponseEntity<?> response = responseUtils.getResponse(resultMap, ResultCode.SERVER_ERROR, HttpStatus.OK);
+
         LoggingUtils.showCallLog(response);
         return response;
     }
