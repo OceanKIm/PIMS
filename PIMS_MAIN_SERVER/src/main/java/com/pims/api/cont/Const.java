@@ -21,7 +21,6 @@ public class Const {
      */
     public enum CONFIG_KEY {
         ACCESS_TOKEN_EXP_HOUR,
-        ACCESS_TOKEN_EXP_DAY,
         REFRESH_TOKEN_EXP_HOUR,
         PASSWORD_ENCRYPTION_ALGORITHM,
         IS_SERVER_AOP_LOG,
