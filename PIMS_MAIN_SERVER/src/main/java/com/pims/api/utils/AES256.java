@@ -36,10 +36,6 @@ public class AES256 {
         IvParameterSpec ivParamSpec = new IvParameterSpec(iv.getBytes());
         cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivParamSpec);
         byte[] encrypted = cipher.doFinal(text.getBytes("UTF-8"));
-        log.debug("============================================================================================");
-        log.debug("encrypt aes 215 text before : {}", text);
-        log.debug("encrypt aes 215 text after  : {}", Base64.getEncoder().encodeToString(encrypted));
-        log.debug("============================================================================================");
         return Base64.getEncoder().encodeToString(encrypted);
     }
 
@@ -58,10 +54,6 @@ public class AES256 {
         byte[] decodedBytes = Base64.getDecoder().decode(cipherText);
         byte[] decrypted = cipher.doFinal(decodedBytes);
         String decryptText =  new String(decrypted, "UTF-8");
-        log.debug("============================================================================================");
-        log.debug("decrypt aes 215 text before : {}", cipherText);
-        log.debug("decrypt aes 215 text after  : {}", decryptText);
-        log.debug("============================================================================================");
         return decryptText;
     }
 

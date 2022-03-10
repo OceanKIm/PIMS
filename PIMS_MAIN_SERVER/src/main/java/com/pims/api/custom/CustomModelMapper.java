@@ -15,21 +15,7 @@ public class CustomModelMapper{
      *
      * @return  ModelMapper
      */
-    @Bean
     public ModelMapper mapper() {
-        return modelMapper;
-    }
-
-    /**
-     * STRICT : 지능적으로 맵핑 해준다.
-     *
-     * @return  ModelMapper
-    */
-    @Bean
-    public ModelMapper strictMapper() {
-        modelMapper.getConfiguration()
-                .setAmbiguityIgnored(true)
-                .setMatchingStrategy(MatchingStrategies.STRICT);
         return modelMapper;
     }
 
@@ -38,7 +24,18 @@ public class CustomModelMapper{
      *
      * @return  ModelMapper
      */
-    @Bean
+    public ModelMapper strictMapper() {
+        modelMapper.getConfiguration()
+                .setAmbiguityIgnored(true)
+                .setMatchingStrategy(MatchingStrategies.STRICT);
+        return modelMapper;
+    }
+
+    /**
+     * STRICT : 지능적으로 맵핑 해준다.
+     *
+     * @return  ModelMapper
+     */
     public ModelMapper standardMapper() {
         modelMapper.getConfiguration()
                 .setAmbiguityIgnored(true)
@@ -51,7 +48,6 @@ public class CustomModelMapper{
      *
      * @return  ModelMapper
      */
-    @Bean
     public ModelMapper looseMapper() {
         modelMapper.getConfiguration()
                 .setAmbiguityIgnored(true)

@@ -32,8 +32,11 @@ public class EmployeeService {
      * @return  EmployeeEntity
     */
     public EmployeeEntity joinEmployee(EmployeeJoinDto employeeJoinDto) {
-        EmployeeEntity employeeEntity = customModelMapper.standardMapper().map(employeeJoinDto, EmployeeEntity.class);
+        EmployeeEntity employeeEntity = customModelMapper.strictMapper().map(employeeJoinDto, EmployeeEntity.class);
         return employeeRepository.save(employeeEntity);
     }
+
+
+
 
 }

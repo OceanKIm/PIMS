@@ -59,13 +59,13 @@ public class EmployeeEntity {
     @Column(name = "dev_month")
     private Integer devMonth;
 
-    @Column(name = "emp_st", nullable = false, length = 2)
+    @Column(name = "emp_st", length = 2)
     private String empSt;
 
-    @Column(name = "reg_dt", nullable = false, length = 45)
+    @Column(name = "reg_dt", length = 45)
     private String regDt;
 
-    @Column(name = "mod_dt", nullable = false, length = 45)
+    @Column(name = "mod_dt", length = 45)
     private String modDt;
 
 }
