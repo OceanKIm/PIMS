@@ -1,6 +1,7 @@
 package com.pims.api.domain.user.controller;
 
 
+import com.pims.api.cont.ResultCode;
 import com.pims.api.domain.etc.entity.ConfigEntity;
 import com.pims.api.domain.etc.service.ConfigService;
 import com.pims.api.domain.user.controller.dto.EmployeeJoinDto;
@@ -48,6 +49,13 @@ public class EmployeeController {
      */
     @RequestMapping(value = "/employee", method = RequestMethod.POST)
     public ResponseEntity<?> joinEmployee(@RequestBody @Valid final EmployeeJoinDto employeeJoinDto) {
+
+        // 중복 회원 체크
+        if (employeeService.existsByEmpId(employeeJoinDto.getEmpId())) {
+            return responseUtils.getResponse(ResultCode.VALID_DUPLICATE_USER);
+        }
+
+        // TODO 이메일 인증 후 회원가입.
 
         EmployeeEntity employeeEntity = employeeService.joinEmployee(employeeJoinDto);
 

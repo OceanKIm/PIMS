@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +36,7 @@ public class ConfigService {
      *
      * @return  ConfigEntity
      */
+    @Transactional(readOnly = true)
     public List<ConfigEntity> selectConfigInfo() {
         return configRepository.findAll();
     }
@@ -46,6 +48,7 @@ public class ConfigService {
      * @param id config table pk
      * @return  ConfigEntity
     */
+    @Transactional(readOnly = true)
     public ConfigEntity selectConfigInfo(Integer id) {
         Optional<ConfigEntity> optional = configRepository.findById(id);
         return optional.orElseThrow(() -> new CustomResponseException(ResultCode.NON_EXISTENT));
@@ -54,6 +57,7 @@ public class ConfigService {
     /**
      * 기본 설정값 조회 서버 글로벌 저장 Service
      */
+    @Transactional(readOnly = true)
     public void loadServerConfig() {
         String key = null;
         String value = null;

@@ -61,12 +61,12 @@ public class EmployeeEntity {
     private Integer devMonth;
 
     @Column(name = "emp_st", length = 2)
-    private String empSt = "R";
+    private String empSt = "W"; // default 가입 대기 상태
 
     @Column(name = "reg_dt", length = 45)
-    private String regDt = DateUtils.getCurrentDay(DateUtils.DATE_TIME_PATTERN);
+    private String regDt = DateUtils.getCurrentDay(DateUtils.DATE_TIME_PATTERN); // default 현재 날짜
 
     @Column(name = "mod_dt", length = 45)
-    private String modDt = DateUtils.getCurrentDay(DateUtils.DATE_TIME_PATTERN);
+    private String modDt = DateUtils.getCurrentDay(DateUtils.DATE_TIME_PATTERN); // default 현재 날짜
 
 }

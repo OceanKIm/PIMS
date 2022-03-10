@@ -37,14 +37,14 @@ public enum MessageCode {
     RESULT_CODE_OVERLAP_PLATFORM_PACKAGE_NAME,                                           // 이미 등록한 패키지명이 있습니다.
     RESULT_CODE_NOT_IMAGE_FILE,                                                          // 지원하지 않는 파일입니다.
     RESULT_CODE_UNKNOWN_ERROR,                                                           // 알 수 없는 오류
-    RESULT_CODE_FILE_NOT_FOUND,                                                                      // 파일이 존재하지 않습니다.
-    RESULT_CODE_VALID_NOT_CONFIG_SETTING,                                                            // 잘못된 설정값 입니다.
-    RESULT_CODE_VALID_DUPLICATE_USER,                                                                // 이미 등록된 회원입니다.
-    RESULT_CODE_VALID_NOT_ENC_PASSWORD,                                                              // 패스워드 암호화 방식을 확인해 주세요.
-    RESULT_CODE_VALID_EMPTY_INPUT_TARGET,                                                            // {0} 존재하지 않습니다.
-    RESULT_CODE_VALID_EMPTY_USER,                                                                    // 회원이 존재하지 않습니다.
-    RESULT_CODE_VALID_NOT_INFLOW,                                                                    // 잘못된 접근입니다.
-    RESULT_CODE_VALID_EMPTY_TEMP,                                                                    // 해당 항목이 존재하지 않습니다.
-    RESULT_CODE_NO_AUTH_USER,                                                                        // 권한이 없는 사용자 입니다.
-    RESULT_CODE_DUPLICATE_LOGIN                                                                      // 중복 로그인 입니다.
+    RESULT_CODE_FILE_NOT_FOUND,                                                          // 파일이 존재하지 않습니다.
+    RESULT_CODE_VALID_NOT_CONFIG_SETTING,                                                // 잘못된 설정값 입니다.
+    RESULT_CODE_VALID_DUPLICATE_USER,                                                    // 이미 등록된 회원 이메일 입니다.
+    RESULT_CODE_VALID_NOT_ENC_PASSWORD,                                                  // 패스워드 암호화 방식을 확인해 주세요.
+    RESULT_CODE_VALID_EMPTY_INPUT_TARGET,                                                // {0} 존재하지 않습니다.
+    RESULT_CODE_VALID_EMPTY_USER,                                                        // 회원이 존재하지 않습니다.
+    RESULT_CODE_VALID_NOT_INFLOW,                                                        // 잘못된 접근입니다.
+    RESULT_CODE_VALID_EMPTY_TEMP,                                                        // 해당 항목이 존재하지 않습니다.
+    RESULT_CODE_NO_AUTH_USER,                                                            // 권한이 없는 사용자 입니다.
+    RESULT_CODE_DUPLICATE_LOGIN                                                          // 중복 로그인 입니다.
 }
