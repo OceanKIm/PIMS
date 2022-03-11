@@ -52,9 +52,13 @@ public class EmployeeService {
      * @param employeeJoinDto 회원가입 DTO
      * @return  EmployeeEntity
     */
-    public Employee joinEmployee(EmployeeJoinDto employeeJoinDto) {
+    public boolean joinEmployee(EmployeeJoinDto employeeJoinDto) {
         Employee employee = customModelMapper.strictMapper().map(employeeJoinDto, Employee.class);
-        return employeeRepository.save(employee);
+        employee = employeeRepository.save(employee);
+        if (null == employee) { // TODO save return 처리에 대해서 좀 더 알아 보기.
+            return false;
+        }
+        return true;
     }
 
 }

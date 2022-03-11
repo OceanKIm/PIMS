@@ -10,8 +10,9 @@ package com.pims.api.cont;
 **/
 public enum ResultCode {
 
-    //성공
+    //성공 또는 실패
     SUCCESS("S0000", MessageCode.RESULT_CODE_SUCCESS_MESSAGE),
+    FAILURE("F0000", MessageCode.RESULT_CODE_FAIL_MESSAGE),
 
     // 요청오류
     BAD_REQUEST_ERROR("E1000", MessageCode.RESULT_CODE_BAD_REQUEST_MESSAGE),

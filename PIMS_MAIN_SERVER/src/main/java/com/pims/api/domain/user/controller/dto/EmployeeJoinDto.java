@@ -27,17 +27,14 @@ public class EmployeeJoinDto implements Serializable {
     @NotEmpty
     private String empNm;
 
-    // TODO DB에서 캐싱 조회 후 유효성 검사 로직 추가
     private String rankCd;
 
-    // TODO DB에서 캐싱 조회 후 유효성 검사 로직 추가
     private String teamCd;
 
     private String empHp;
 
     private String isDeveloper;
 
-    // TODO DB에서 캐싱 조회 후 유효성 검사 로직 추가
     private String devPosCd;
 
     private Integer devMonth;

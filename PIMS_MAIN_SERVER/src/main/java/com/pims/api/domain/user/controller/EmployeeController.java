@@ -5,6 +5,7 @@ import com.pims.api.cont.ResultCode;
 import com.pims.api.domain.user.controller.dto.EmployeeJoinDto;
 import com.pims.api.domain.user.controller.dto.EmployeeLoginDto;
 import com.pims.api.domain.user.service.EmployeeService;
+import com.pims.api.domain.user.service.UserInfoService;
 import com.pims.api.utils.EncryptUtil;
 import com.pims.api.utils.ResponseUtils;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,8 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
+    private final UserInfoService userInfoService;
+
     /**
      * Controller
      * : 사용자 회원 가입 API
@@ -58,13 +61,22 @@ public class EmployeeController {
             return responseUtils.getResponse(ResultCode.DUPLICATE_HP);
         }
 
+        // 직급, 팀, 개발자 포지션 정보 코드 유효성 체크
+        if (!userInfoService.existsByRankCd(employeeJoinDto.getRankCd()) ||
+            !userInfoService.existsByTeamCd(employeeJoinDto.getTeamCd()) ||
+            !userInfoService.existsByDevPosCd(employeeJoinDto.getDevPosCd())) {
+            return responseUtils.getResponse(ResultCode.NON_EXISTENT);
+        }
+
         // TODO 이메일 인증 후 회원가입.
 
         // 비밀번호 암호화
         employeeJoinDto.setEmpPwd(EncryptUtil.makeSHA256(employeeJoinDto.getEmpPwd()));
 
-        employeeService.joinEmployee(employeeJoinDto);
-
+        // 회원 등록
+        if (!employeeService.joinEmployee(employeeJoinDto)) {
+            return responseUtils.getResponse(ResultCode.FAILURE);
+        }
         return responseUtils.getSuccess(ResultCode.SUCCESS);
     }
 
