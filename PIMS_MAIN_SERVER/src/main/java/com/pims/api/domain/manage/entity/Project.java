@@ -26,7 +26,7 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // TODO modify
     @Column(name = "project_cd", nullable = false)
-    private Integer projectCd;
+    private String projectCd;
 
     @Column(name = "project_type", nullable = false, length = 5)
     private String projectType;

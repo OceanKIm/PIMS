@@ -1,14 +1,17 @@
 package com.pims.api.domain.manage.service;
 
+import com.pims.api.cont.ResultCode;
 import com.pims.api.custom.CustomModelMapper;
 import com.pims.api.domain.manage.controller.dto.ProjectCreateDto;
 import com.pims.api.domain.manage.entity.Project;
 import com.pims.api.domain.manage.repository.ProjectRepository;
+import com.pims.api.exception.CustomResponseException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * ProjectService
@@ -49,6 +52,17 @@ public class ProjectService {
     */
     public List<Project> selectProjectInfoList() {
         return projectRepository.findAll();
+    }
+
+    /**
+     * 프로젝트 정보 단건 조회 service
+     *
+     * @param projectCd 프로젝트 코드
+     * @return Project 프로젝트 단건 정보
+     */
+    public Project selectProjectInfoDetail(String projectCd) {
+        Optional<Project> optional = projectRepository.findByProjectCd(projectCd);
+        return optional.orElseThrow(() -> new CustomResponseException(ResultCode.NON_EXISTENT));
     }
 
 }

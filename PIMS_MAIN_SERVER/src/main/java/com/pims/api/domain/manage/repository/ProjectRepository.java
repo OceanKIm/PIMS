@@ -4,6 +4,8 @@ import com.pims.api.domain.manage.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.util.Optional;
+
 /**
  * ProjectRepository
  * : 프로젝트 테이블 레파지토리
@@ -13,4 +15,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * 작성일 2022-03-10
 **/
 public interface ProjectRepository extends JpaRepository<Project, Integer>, JpaSpecificationExecutor<Project> {
+
+    Optional<Project> findByProjectCd(String projectCd);
+
 }

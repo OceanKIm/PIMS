@@ -9,10 +9,7 @@ import com.pims.api.utils.ResponseUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -78,6 +75,20 @@ public class ProjectController {
         return responseUtils.getSuccess(resultList);
     }
 
-    // TODO 프로젝트 단건 조회
-    
+    /**
+     * Controller
+     * : 프로젝트 단건 조회 API
+     *
+     * @authLevel 1
+     * @method  GET
+     * @uriPath /manage/project/{projectCd}
+     *
+     * @return  org.springframework.http.ResponseEntity<?>
+     */
+    @RequestMapping(value = "/project/{projectCd}", method = RequestMethod.GET)
+    public ResponseEntity<?> selectProjectInfoDetail(@PathVariable("projectCd") String projectCd) {
+        Project result = projectService.selectProjectInfoDetail(projectCd);
+        return responseUtils.getSuccess(result);
+    }
+
 }
