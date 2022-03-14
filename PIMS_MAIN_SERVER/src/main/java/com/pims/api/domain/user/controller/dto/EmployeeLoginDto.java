@@ -1,6 +1,7 @@
 package com.pims.api.domain.user.controller.dto;
 
-import lombok.Data;
+import com.pims.api.cont.Const;
+import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -14,7 +15,12 @@ import java.io.Serializable;
  * @version 1.0.0
  * 작성일 2022-03-08
 **/
-@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class EmployeeLoginDto implements Serializable {
 
     @NotEmpty
@@ -23,5 +29,7 @@ public class EmployeeLoginDto implements Serializable {
 
     @NotEmpty
     private String empPwd;
+
+    private Const.USER_ROLE role;
 
 }

@@ -2,10 +2,12 @@ package com.pims.api.domain.user.controller;
 
 
 import com.pims.api.cont.ResultCode;
+import com.pims.api.domain.common.dto.TokenDTO;
 import com.pims.api.domain.user.controller.dto.EmployeeJoinDto;
 import com.pims.api.domain.user.controller.dto.EmployeeLoginDto;
 import com.pims.api.domain.user.service.EmployeeService;
 import com.pims.api.domain.user.service.UserInfoService;
+import com.pims.api.provider.JwtProvider;
 import com.pims.api.utils.EncryptUtil;
 import com.pims.api.utils.ResponseUtils;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 
 
 /**
@@ -37,18 +40,20 @@ public class EmployeeController {
 
     private final UserInfoService userInfoService;
 
+    private final JwtProvider jwtProvider;
+
     /**
      * Controller
      * : 사용자 회원 가입 API
      *
      * @authLevel 1
      * @method  POST
-     * @uriPath /user/employee
+     * @uriPath /user/employee/join.do
      *
      * @param   employeeJoinDto 회원가입 dto
      * @return  org.springframework.http.ResponseEntity<?>
      */
-    @RequestMapping(value = "/employee", method = RequestMethod.POST)
+    @RequestMapping(value = "/employee/join.do", method = RequestMethod.POST)
     public ResponseEntity<?> joinEmployee(@RequestBody @Valid final EmployeeJoinDto employeeJoinDto) throws NoSuchAlgorithmException {
 
         // email 존재 체크
@@ -86,22 +91,27 @@ public class EmployeeController {
      *
      * @authLevel 1
      * @method POST
-     * @uriPath /user/employee/login
+     * @uriPath /user/employee/login.do
      *
      * @param   employeeLoginDto 로그인 DTO
      * @return  org.springframework.http.ResponseEntity<?>
      */
-    @RequestMapping(value = "/employee/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/employee/login.do", method = RequestMethod.POST)
     public ResponseEntity<?> loginEmployee(@RequestBody @Valid final EmployeeLoginDto employeeLoginDto) throws NoSuchAlgorithmException {
 
-        // email 존재 체크
-        if (!employeeService.existsByEmpId(employeeLoginDto.getEmpId())) {
-            return responseUtils.getResponse(ResultCode.NON_EXISTENT_EMAIL_ID);
+        HashMap<String, Object> resultMap = new HashMap<>();
+
+        // 로그인 인증 처리
+        if (!employeeService.loginEmployee(employeeLoginDto)) {
+            return  responseUtils.getResponse(ResultCode.NOT_EQUAL_PASSWORD);
         }
 
-        employeeLoginDto.setEmpPwd(EncryptUtil.makeSHA256(employeeLoginDto.getEmpPwd()));
+        // jwt 토큰 생성
+        TokenDTO tokenDTO = jwtProvider.generateTokenDto(employeeLoginDto.getRole());
 
-        return responseUtils.getSuccess(ResultCode.SUCCESS);
+        resultMap.put("tokenInfo", tokenDTO);
+
+        return responseUtils.getSuccess(resultMap);
     }
 
 

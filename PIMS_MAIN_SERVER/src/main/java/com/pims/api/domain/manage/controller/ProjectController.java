@@ -85,9 +85,9 @@ public class ProjectController {
      *
      * @return  org.springframework.http.ResponseEntity<?>
      */
-    @RequestMapping(value = "/project/{projectCd}", method = RequestMethod.GET)
-    public ResponseEntity<?> selectProjectInfoDetail(@PathVariable("projectCd") String projectCd) {
-        Project result = projectService.selectProjectInfoDetail(projectCd);
+    @RequestMapping(value = "/project/{projectNo}", method = RequestMethod.GET)
+    public ResponseEntity<?> selectProjectInfoDetail(@PathVariable("projectNo") Integer projectNo) {
+        Project result = projectService.selectProjectInfoDetail(projectNo);
         return responseUtils.getSuccess(result);
     }
 

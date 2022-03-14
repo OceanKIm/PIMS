@@ -25,7 +25,7 @@ import javax.persistence.*;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) // TODO modify
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "emp_no", nullable = false)
     private Integer empNo;
 

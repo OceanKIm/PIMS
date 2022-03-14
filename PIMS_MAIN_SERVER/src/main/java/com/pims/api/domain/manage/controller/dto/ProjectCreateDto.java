@@ -1,16 +1,20 @@
 package com.pims.api.domain.manage.controller.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
-@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class ProjectCreateDto implements Serializable {
+
+    @NotEmpty
+    private String projectCd;
 
     @NotEmpty
     private String projectType;
@@ -28,4 +32,5 @@ public class ProjectCreateDto implements Serializable {
     // TODO 날짜 유효성 체크
     @NotEmpty
     private String projectEndDt;
+
 }

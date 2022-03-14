@@ -4,6 +4,14 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * Issue
+ * : Issue 테이블 entity
+ *
+ * @author hskim
+ * @version 1.0.0
+ * 작성일 2022-03-14
+**/
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,9 +23,7 @@ import javax.persistence.*;
 public class Issue {
 
     @Id
-    @Column(name = "id", nullable = false)
-    private Long id;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "issue_no", nullable = false)
     private Integer issueNo;
 

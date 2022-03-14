@@ -1,12 +1,19 @@
 package com.pims.api.domain.user.service;
 
+import com.pims.api.cont.ResultCode;
 import com.pims.api.custom.CustomModelMapper;
 import com.pims.api.domain.user.controller.dto.EmployeeJoinDto;
+import com.pims.api.domain.user.controller.dto.EmployeeLoginDto;
 import com.pims.api.domain.user.entity.Employee;
 import com.pims.api.domain.user.repository.EmployeeRepository;
+import com.pims.api.exception.CustomResponseException;
+import com.pims.api.utils.EncryptUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+
+import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
 
 /**
  * EmployeeService
@@ -58,6 +65,27 @@ public class EmployeeService {
         if (null == employee) { // TODO save return 처리에 대해서 좀 더 알아 보기.
             return false;
         }
+        return true;
+    }
+
+
+    public boolean loginEmployee(EmployeeLoginDto employeeLoginDto) throws NoSuchAlgorithmException {
+
+        // 사용자 정보 조회
+        Optional<EmployeeLoginDto> optional = employeeRepository.findByEmpId(employeeLoginDto.getEmpId());
+        EmployeeLoginDto savedLoginDTO = optional.orElseThrow(() -> new CustomResponseException(ResultCode.NON_EXISTENT_EMAIL_ID));
+
+        // 비밀번호 암호화
+        employeeLoginDto.setEmpPwd(EncryptUtil.makeSHA256(employeeLoginDto.getEmpPwd()));
+
+        // 비밀번호 검증
+        if(!employeeLoginDto.getEmpPwd().equals(savedLoginDTO.getEmpPwd())) {
+            return false;
+        }
+
+        // 룰(권한) 정보 등록
+        employeeLoginDto.setRole(savedLoginDTO.getRole());
+
         return true;
     }
 

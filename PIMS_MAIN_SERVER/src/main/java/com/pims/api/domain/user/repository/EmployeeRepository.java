@@ -1,8 +1,13 @@
 package com.pims.api.domain.user.repository;
 
+import com.pims.api.domain.user.controller.dto.EmployeeLoginDto;
 import com.pims.api.domain.user.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.Optional;
 
 /**
  * EmployeeRepository
@@ -17,5 +22,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>, Jp
     boolean existsByEmpId(String EmpId);
 
     boolean existsByEmpHp(String EmpHp);
+
+    @Query("SELECT new com.pims.api.domain.user.controller.dto.EmployeeLoginDto(e.empId, e.empPwd, e.role) FROM Employee e WHERE e.empId = :empId")
+    Optional<EmployeeLoginDto> findByEmpId(@Param("empId") String EmpId);
 
 }

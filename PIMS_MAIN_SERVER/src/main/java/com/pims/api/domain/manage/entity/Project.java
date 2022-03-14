@@ -24,7 +24,10 @@ import javax.persistence.*;
 public class Project {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) // TODO modify
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "project_no", nullable = false)
+    private Integer projectNo;
+
     @Column(name = "project_cd", nullable = false)
     private String projectCd;
 

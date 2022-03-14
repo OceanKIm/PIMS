@@ -16,6 +16,6 @@ import java.util.Optional;
 **/
 public interface ProjectRepository extends JpaRepository<Project, Integer>, JpaSpecificationExecutor<Project> {
 
-    Optional<Project> findByProjectCd(String projectCd);
+    Optional<Project> findByProjectNo(Integer projectNo);
 
 }

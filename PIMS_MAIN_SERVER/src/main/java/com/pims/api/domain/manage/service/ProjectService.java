@@ -9,6 +9,7 @@ import com.pims.api.exception.CustomResponseException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,6 +51,7 @@ public class ProjectService {
      * 
      * @return List<Project> 프로젝트 정보 리스트
     */
+    @Transactional(readOnly = true)
     public List<Project> selectProjectInfoList() {
         return projectRepository.findAll();
     }
@@ -57,11 +59,12 @@ public class ProjectService {
     /**
      * 프로젝트 정보 단건 조회 service
      *
-     * @param projectCd 프로젝트 코드
+     * @param projectNo 프로젝트 일련번호
      * @return Project 프로젝트 단건 정보
      */
-    public Project selectProjectInfoDetail(String projectCd) {
-        Optional<Project> optional = projectRepository.findByProjectCd(projectCd);
+    @Transactional(readOnly = true)
+    public Project selectProjectInfoDetail(Integer projectNo) {
+        Optional<Project> optional = projectRepository.findByProjectNo(projectNo);
         return optional.orElseThrow(() -> new CustomResponseException(ResultCode.NON_EXISTENT));
     }
 
