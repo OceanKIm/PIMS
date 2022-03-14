@@ -1,6 +1,5 @@
 package com.pims.api.domain.user.controller.dto;
 
-import com.pims.api.cont.Const;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -32,6 +31,6 @@ public class EmployeeLoginDto implements Serializable {
     @NotEmpty
     private String empPwd;
 
-    private Const.USER_ROLE role;
+    private Integer empRole;
 
 }

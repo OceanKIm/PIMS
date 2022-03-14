@@ -4,7 +4,6 @@ import com.pims.api.cont.Const;
 import com.pims.api.custom.CustomMap;
 import com.pims.api.custom.PIMSAuthenticationToken;
 import com.pims.api.domain.common.dto.TokenDTO;
-import com.pims.api.domain.user.service.EmployeeService;
 import com.pims.api.exception.CustomForbiddenException;
 import com.pims.api.utils.MessageUtils;
 import com.pims.api.utils.Utils;
@@ -41,8 +40,6 @@ public class JwtProvider {
     @Value("${SERVER.JWT.KEY}")
     private String JWT_KEY;
     private String secretKey = null;
-
-    private final EmployeeService employeeService;
 
     private final MessageUtils messageUtils;
 
@@ -160,36 +157,12 @@ public class JwtProvider {
      */
     public Authentication getAuthentication(ServletRequest request, String token) {
 
-        // 아이피
         String address = Utils.getIpAddress((HttpServletRequest) request);
-
-        // 로그인 테이블 조회
-        // 로그인 된 회원이면 인증 처리
-        // 아이피 맵핑
-        CustomMap customMap = new CustomMap();
-        customMap.put("accessToken", token);
-        customMap.put("address", address);
-
-/*
-        HashMap<String, Object> loginMap = userService.selectLoginInfo(customMap);
-        if (null == loginMap) {
-            throw new CustomForbiddenException(ResultCode.FORBIDDEN_ERROR);
-        }
-        if (loginMap.containsKey("LGB_LOGIN_ST")) {
-            String userStatus = (String) loginMap.get("LGB_LOGIN_ST");
-            if ("D".equals(userStatus)) {
-                throw new CustomForbiddenException(ResultCode.NOT_LOGIN_ERROR);
-            }
-        }
-*/
-
         Integer userLevel = (int) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get(Const.JWT_KEY.level.name());
-
         Const.USER_ROLE userRole = Const.USER_ROLE.getUserRole(userLevel);
 
         ArrayList<GrantedAuthority> authorities = new ArrayList<>();
-
-        authorities.add(new SimpleGrantedAuthority(userRole.name()));
+        authorities.add(new SimpleGrantedAuthority(userRole.getAuthority()));
 
         return new PIMSAuthenticationToken(token, address, authorities);
     }

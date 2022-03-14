@@ -59,17 +59,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.httpBasic().disable()
                 .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .cors()
-                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .cors().configurationSource(corsConfigurationSource()).and()
                 .authorizeRequests()
+                .antMatchers("/user/employee/join.do").permitAll()  // 회원가입 허용
+                .antMatchers("/user/employee/login.do").permitAll() // 로그인 허용
 
-                // 사용자,관리자 모두 사용가능한 API
-                //ETC
-                //.antMatchers(RequestURI.REQUEST_WEB_INSERT_ETC_00001).hasAnyAuthority(userAuthType, adminAuthType)
+                // 관리자 사용 API 권한 등록
 
-                .anyRequest().permitAll()
+                // 나머지 일반 사용자 권한 등록
+                .anyRequest().hasRole(user)
+
                 .and()
                 .addFilterBefore(new JwtAuthFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
     }
@@ -95,4 +95,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

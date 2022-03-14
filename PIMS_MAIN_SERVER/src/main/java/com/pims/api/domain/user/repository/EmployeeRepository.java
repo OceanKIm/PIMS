@@ -23,7 +23,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>, Jp
 
     boolean existsByEmpHp(String EmpHp);
 
-    @Query("SELECT new com.pims.api.domain.user.controller.dto.EmployeeLoginDto(e.empNo, e.empId, e.empPwd, e.role) FROM Employee e WHERE e.empId = :empId")
+    @Query("SELECT new com.pims.api.domain.user.controller.dto.EmployeeLoginDto(e.empNo, e.empId, e.empPwd, e.empRole) FROM Employee e WHERE e.empId = :empId")
     Optional<EmployeeLoginDto> findByEmpId(@Param("empId") String EmpId);
 
 }

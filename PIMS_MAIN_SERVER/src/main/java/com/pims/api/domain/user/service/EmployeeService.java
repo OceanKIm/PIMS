@@ -89,7 +89,7 @@ public class EmployeeService {
         }
 
         // 룰(권한) 정보 등록
-        employeeLoginDto.setRole(savedLoginDTO.getRole());
+        employeeLoginDto.setEmpRole(savedLoginDTO.getEmpRole());
 
         // 사원 일련번호 정보 등록
         employeeLoginDto.setEmpNo(savedLoginDTO.getEmpNo());

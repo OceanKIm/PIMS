@@ -1,6 +1,7 @@
 package com.pims.api.domain.user.controller;
 
 
+import com.pims.api.cont.Const;
 import com.pims.api.cont.ResultCode;
 import com.pims.api.custom.CustomMap;
 import com.pims.api.domain.common.dto.TokenDTO;
@@ -106,7 +107,7 @@ public class EmployeeController {
     @RequestMapping(value = "/employee/login.do", method = RequestMethod.POST)
     public ResponseEntity<?> loginEmployee(HttpServletRequest request, @RequestBody @Valid final EmployeeLoginDto employeeLoginDto) throws NoSuchAlgorithmException {
 
-        HashMap<String, Object> resultMap = new HashMap<>();
+        HashMap<String, Object> responseMap = new HashMap<>();
 
         // 로그인 인증 처리
         if (!employeeService.loginEmployee(employeeLoginDto)) {
@@ -118,16 +119,16 @@ public class EmployeeController {
         LoginLog loginLog = loginLogService.insertLog(employeeLoginDto.getEmpNo(), address);
 
         // jwt 토큰 생성
-        TokenDTO tokenDTO = jwtProvider.generateTokenDto(employeeLoginDto.getRole());
+        TokenDTO tokenDTO = jwtProvider.generateTokenDto(Const.USER_ROLE.getUserRole(employeeLoginDto.getEmpRole()));
 
-        // 토큰 정보 result 등록
-        resultMap.put("tokenInfo", tokenDTO);
+        // 토큰 정보 response 등록
+        responseMap.put("tokenInfo", tokenDTO);
 
-        // 로그인 정보 result 등록
-        resultMap.put("loginInfo", new CustomMap().put("empNo", loginLog.getEmpNo())
-                                                  .put("loginIp", loginLog.getLoginIp())
-                                                  .put("loginDt", loginLog.getLoginDt()));
+        // 로그인 정보 response 등록
+        responseMap.put("loginInfo", new CustomMap().put("empNo", loginLog.getEmpNo())
+                                                    .put("loginIp", loginLog.getLoginIp())
+                                                    .put("loginDt", loginLog.getLoginDt()));
 
-        return responseUtils.getSuccess(resultMap);
+        return responseUtils.getSuccess(responseMap);
     }
 }

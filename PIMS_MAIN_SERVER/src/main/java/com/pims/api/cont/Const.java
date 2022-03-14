@@ -49,7 +49,7 @@ public class Const {
      */
     public enum HTTP_AUTH_HEADER {
         eAUTH_ACCESS_TOKEN("X-AUTH-ACCESS-TOKEN"),
-        eAUTH_ID("X-AUTH-ID");
+        eAUTH_ID("X-AUTH-ID");  // TODO 추후 필요시 사용
 
         private final String header;
 
@@ -83,17 +83,33 @@ public class Const {
      * 사용자 권한 enum
      */
     public enum USER_ROLE {
-        superAdmin(10),
-        admin(5),
-        user(1);
+        superAdmin("ROLE_superAdmin", 10),
+        admin("ROLE_admin", 5),
+        user("ROLE_user", 1);
 
+
+        private final String authority;
         private final int userLevel;
 
-        USER_ROLE(int userLevel) {
+        USER_ROLE(String authority, int userLevel) {
+            this.authority = authority;
             this.userLevel = userLevel;
         }
+
+        public String getAuthority() {
+            return this.authority;
+        }
+
         public int getUserLevel() {
             return this.userLevel;
+        }
+
+        public static String getUserRole(String authority) {
+            USER_ROLE tbs = Arrays.stream(USER_ROLE.values()).filter(tb -> tb.authority.equals(authority)).findAny().orElse(null);
+            if (tbs == null) {
+                return null;
+            }
+            return tbs.getAuthority();
         }
 
         public static USER_ROLE getUserRole(int userLevel) {

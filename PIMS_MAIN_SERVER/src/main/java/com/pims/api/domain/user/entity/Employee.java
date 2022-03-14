@@ -36,8 +36,7 @@ public class Employee {
     private String empPwd;
 
     @Column(name = "emp_role", nullable = false)
-    @Enumerated(EnumType.ORDINAL)
-    private Const.USER_ROLE role = Const.USER_ROLE.user;
+    private Integer empRole = Const.USER_ROLE.user.getUserLevel();
 
     @Column(name = "emp_nm", nullable = false, length = 10)
     private String empNm;
