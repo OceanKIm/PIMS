@@ -23,6 +23,8 @@ import java.io.Serializable;
 @ToString
 public class EmployeeLoginDto implements Serializable {
 
+    private Integer empNo;
+
     @NotEmpty
     @Email
     private String empId;

@@ -4,6 +4,7 @@ import com.pims.api.cont.Const;
 import com.pims.api.custom.CustomMap;
 import com.pims.api.custom.PIMSAuthenticationToken;
 import com.pims.api.domain.common.dto.TokenDTO;
+import com.pims.api.domain.user.service.EmployeeService;
 import com.pims.api.exception.CustomForbiddenException;
 import com.pims.api.utils.MessageUtils;
 import com.pims.api.utils.Utils;
@@ -41,7 +42,7 @@ public class JwtProvider {
     private String JWT_KEY;
     private String secretKey = null;
 
-    //private final UserService userService;
+    private final EmployeeService employeeService;
 
     private final MessageUtils messageUtils;
 
@@ -158,6 +159,7 @@ public class JwtProvider {
      * @return Authentication 인증 클래스
      */
     public Authentication getAuthentication(ServletRequest request, String token) {
+
         // 아이피
         String address = Utils.getIpAddress((HttpServletRequest) request);
 
@@ -167,7 +169,8 @@ public class JwtProvider {
         CustomMap customMap = new CustomMap();
         customMap.put("accessToken", token);
         customMap.put("address", address);
-        /*
+
+/*
         HashMap<String, Object> loginMap = userService.selectLoginInfo(customMap);
         if (null == loginMap) {
             throw new CustomForbiddenException(ResultCode.FORBIDDEN_ERROR);
@@ -178,11 +181,16 @@ public class JwtProvider {
                 throw new CustomForbiddenException(ResultCode.NOT_LOGIN_ERROR);
             }
         }
-        */
-        int userLevel = (int) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get(Const.JWT_KEY.level.name());
+*/
+
+        Integer userLevel = (int) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get(Const.JWT_KEY.level.name());
+
         Const.USER_ROLE userRole = Const.USER_ROLE.getUserRole(userLevel);
+
         ArrayList<GrantedAuthority> authorities = new ArrayList<>();
+
         authorities.add(new SimpleGrantedAuthority(userRole.name()));
+
         return new PIMSAuthenticationToken(token, address, authorities);
     }
 

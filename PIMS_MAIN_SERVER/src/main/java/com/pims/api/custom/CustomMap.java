@@ -23,7 +23,7 @@ public class CustomMap extends LinkedHashMap<String, Object> {
      * @return Object
     */
     @Override
-    public Object put(String key, Object value) {
+    public CustomMap put(String key, Object value) {
         key = key.trim();
         if (value instanceof String) {
             value = ((String) value).trim();

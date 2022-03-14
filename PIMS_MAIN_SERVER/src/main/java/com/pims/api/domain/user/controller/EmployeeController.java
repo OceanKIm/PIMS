@@ -2,19 +2,24 @@ package com.pims.api.domain.user.controller;
 
 
 import com.pims.api.cont.ResultCode;
+import com.pims.api.custom.CustomMap;
 import com.pims.api.domain.common.dto.TokenDTO;
 import com.pims.api.domain.user.controller.dto.EmployeeJoinDto;
 import com.pims.api.domain.user.controller.dto.EmployeeLoginDto;
+import com.pims.api.domain.user.entity.LoginLog;
 import com.pims.api.domain.user.service.EmployeeService;
+import com.pims.api.domain.user.service.LoginLogService;
 import com.pims.api.domain.user.service.UserInfoService;
 import com.pims.api.provider.JwtProvider;
 import com.pims.api.utils.EncryptUtil;
 import com.pims.api.utils.ResponseUtils;
+import com.pims.api.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -39,6 +44,8 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     private final UserInfoService userInfoService;
+
+    private final LoginLogService loginLogService;
 
     private final JwtProvider jwtProvider;
 
@@ -97,7 +104,7 @@ public class EmployeeController {
      * @return  org.springframework.http.ResponseEntity<?>
      */
     @RequestMapping(value = "/employee/login.do", method = RequestMethod.POST)
-    public ResponseEntity<?> loginEmployee(@RequestBody @Valid final EmployeeLoginDto employeeLoginDto) throws NoSuchAlgorithmException {
+    public ResponseEntity<?> loginEmployee(HttpServletRequest request, @RequestBody @Valid final EmployeeLoginDto employeeLoginDto) throws NoSuchAlgorithmException {
 
         HashMap<String, Object> resultMap = new HashMap<>();
 
@@ -106,13 +113,21 @@ public class EmployeeController {
             return  responseUtils.getResponse(ResultCode.NOT_EQUAL_PASSWORD);
         }
 
+        // 로그인 로깅 처리
+        String address = Utils.getIpAddress(request);
+        LoginLog loginLog = loginLogService.insertLog(employeeLoginDto.getEmpNo(), address);
+
         // jwt 토큰 생성
         TokenDTO tokenDTO = jwtProvider.generateTokenDto(employeeLoginDto.getRole());
 
+        // 토큰 정보 result 등록
         resultMap.put("tokenInfo", tokenDTO);
+
+        // 로그인 정보 result 등록
+        resultMap.put("loginInfo", new CustomMap().put("empNo", loginLog.getEmpNo())
+                                                  .put("loginIp", loginLog.getLoginIp())
+                                                  .put("loginDt", loginLog.getLoginDt()));
 
         return responseUtils.getSuccess(resultMap);
     }
-
-
 }

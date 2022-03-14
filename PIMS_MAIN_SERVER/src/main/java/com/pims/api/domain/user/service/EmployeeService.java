@@ -68,7 +68,12 @@ public class EmployeeService {
         return true;
     }
 
-
+    /**
+     * 로그인 인증 Service
+     *
+     * @param employeeLoginDto 로그인 DTO
+     * @return  boolean 로그인 성공 유무
+    */
     public boolean loginEmployee(EmployeeLoginDto employeeLoginDto) throws NoSuchAlgorithmException {
 
         // 사용자 정보 조회
@@ -85,6 +90,9 @@ public class EmployeeService {
 
         // 룰(권한) 정보 등록
         employeeLoginDto.setRole(savedLoginDTO.getRole());
+
+        // 사원 일련번호 정보 등록
+        employeeLoginDto.setEmpNo(savedLoginDTO.getEmpNo());
 
         return true;
     }
