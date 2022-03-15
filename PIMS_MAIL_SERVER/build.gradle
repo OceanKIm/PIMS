@@ -19,22 +19,49 @@ repositories {
 }
 
 dependencies {
+
+	// spring boot starter
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-web-services'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework.boot:spring-boot-starter-quartz'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-web-services'
+
+	// apache lib
+	implementation group: 'commons-codec', name: 'commons-codec', version: '1.5'
+	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
+	implementation group: 'org.apache.tomcat', name: 'tomcat-jdbc', version: '9.0.2'
+	implementation group: 'commons-io', name: 'commons-io', version: '2.6'
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+	implementation 'org.apache.commons:commons-compress:1.21'
+
+	// mail
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// mybatis
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+
+	// lombok
 	compileOnly 'org.projectlombok:lombok'
+
+	// dev tool
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// maria db
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+	//log
+	implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4', version: '1.16'
+
+	/// annotation
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }

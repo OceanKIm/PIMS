@@ -1,4 +1,4 @@
-package com.pims.api.mail;
+package com.pims.mail;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
