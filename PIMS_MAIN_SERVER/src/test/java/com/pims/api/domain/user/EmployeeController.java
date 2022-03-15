@@ -5,6 +5,7 @@ import com.pims.api.domain.user.controller.dto.EmployeeLoginDto;
 import com.pims.api.domain.user.repository.EmployeeRepository;
 import com.pims.api.domain.user.service.UserInfoService;
 import com.pims.api.exception.CustomResponseException;
+import com.pims.api.provider.JwtProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,13 @@ import java.util.Optional;
 public class EmployeeController {
 
     @Autowired
-    UserInfoService userInfoService;
+    private UserInfoService userInfoService;
 
     @Autowired
-    EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private JwtProvider jwtProvider;
 
     public void setUp() {
     }
@@ -31,6 +35,14 @@ public class EmployeeController {
         Optional<EmployeeLoginDto> optional = employeeRepository.findByEmpId("gotmd37@naver.com2");
         System.out.println(optional.orElseThrow(() -> new CustomResponseException(ResultCode.NON_EXISTENT)));
     }
+
+    @Test
+    public void test2() {
+        jwtProvider.isValidateToken("eyJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiYWNjZXNzIiwibGV2ZWwiOjEsImV4cCI6MTY0NzUyNTg5NCwiZW1wTm8iOjQxfQ.rdxzDepM3nP8CniGIQVa6G0LVvw8YVn46AAsLUsTzgc1");
+
+    }
+
+
 }
 
 

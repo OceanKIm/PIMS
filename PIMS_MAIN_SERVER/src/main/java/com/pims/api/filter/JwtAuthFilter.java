@@ -42,8 +42,9 @@ public class JwtAuthFilter extends GenericFilterBean {
     @SneakyThrows
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) {
+        // 응답 객체 생성 시 활용
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+
         try {
             String token = jwtProvider.resolveToken((HttpServletRequest) request);
             if (null != token && jwtProvider.isValidateToken(token)) {
@@ -52,11 +53,11 @@ public class JwtAuthFilter extends GenericFilterBean {
             }
             chain.doFilter(request, response);
         } catch (CustomForbiddenException e) {
-            setErrorResponse(httpServletRequest, httpServletResponse, e.getResultCode());
+            setErrorResponse(httpServletResponse, e.getResultCode());
         }
     }
 
-    public void setErrorResponse(HttpServletRequest request, HttpServletResponse response, ResultCode resultCode) {
+    public void setErrorResponse(HttpServletResponse response, ResultCode resultCode) {
         response.setStatus(HttpStatus.FORBIDDEN.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         ResponseDTO responseDTO = new ResponseDTO();
@@ -71,4 +72,5 @@ public class JwtAuthFilter extends GenericFilterBean {
             e.printStackTrace();
         }
     }
+
 }

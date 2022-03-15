@@ -4,6 +4,7 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
+import java.util.HashMap;
 
 /**
  * PIMSAuthenticationToken
@@ -15,14 +16,27 @@ import java.util.Collection;
 **/
 public class PIMSAuthenticationToken extends AbstractAuthenticationToken {
 
-    private final String jwtToken;
-    private final String address;
+    private final Integer empNo;   // principal   (아이디  : 사원일련번호)
+    private final String jwtToken; // credentials (비밀번호 : jwt token)
 
-    public PIMSAuthenticationToken(String jwtToken, String address, Collection<? extends GrantedAuthority> authorities) {
+    /**
+     * 상세 내용 details
+     * 1. 접근 주소 : address
+     * 2. 권한 레벨 : level
+     */
+    private final HashMap<String, Object> details;
+
+    public PIMSAuthenticationToken(Integer empNo, String jwtToken, HashMap<String, Object> details, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
+        this.empNo = empNo;
         this.jwtToken = jwtToken;
-        this.address = address;
+        this.details = details;
         super.setAuthenticated(true);
+    }
+
+    @Override
+    public Object getPrincipal() {
+        return empNo;
     }
 
     @Override
@@ -31,7 +45,7 @@ public class PIMSAuthenticationToken extends AbstractAuthenticationToken {
     }
 
     @Override
-    public Object getPrincipal() {
-        return address;
+    public Object getDetails() {
+        return details;
     }
 }

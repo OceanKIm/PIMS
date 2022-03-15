@@ -5,7 +5,7 @@ import com.pims.api.cont.ResultCode;
 
 /**
  * CustomForbiddenException
- * : 설명을 여기에 작성한다. TODO check
+ * : HTTP 403 응답 에러 커스텀 예외처리
  *
  * @author hskim
  * @version 1.0.0

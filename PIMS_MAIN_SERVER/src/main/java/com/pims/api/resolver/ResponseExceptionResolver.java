@@ -1,15 +1,12 @@
 package com.pims.api.resolver;
 
 import com.pims.api.cont.ResultCode;
-import com.pims.api.exception.ArgumentNotValidException;
+import com.pims.api.exception.CustomForbiddenException;
 import com.pims.api.exception.CustomResponseException;
 import com.pims.api.utils.LoggingUtils;
-import com.pims.api.utils.MessageUtils;
 import com.pims.api.utils.ResponseUtils;
-import com.pims.api.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -43,12 +40,10 @@ import java.util.List;
 @RestControllerAdvice
 public class ResponseExceptionResolver {
 
-    private final MessageUtils messageUtils;
-
     private final ResponseUtils responseUtils;
 
     /**
-     *  일반 Exception 응답 처리
+     *  일반 에러 처리 Exception
      *
      * @param e Exception
      * @return ResponseEntity<?> Error 응답
@@ -94,7 +89,7 @@ public class ResponseExceptionResolver {
     }
 
     /**
-     *  커스텀 마이징 Exception 응답 처리
+     *  커스텀 마이징 HTTP 200 응답 처리 Exception
      *
      * @param e CustomResponseException
      * @return ResponseEntity<?> Error 응답
@@ -108,7 +103,21 @@ public class ResponseExceptionResolver {
     }
 
     /**
-     *  JPA 처리 중 Exception 응답 처리
+     *  커스텀 마이징 HTTP 403 응답 처리 Exception
+     *
+     * @param e CustomForbiddenException
+     * @return ResponseEntity<?> Error 응답
+     */
+    @ExceptionHandler(value = {CustomForbiddenException.class})
+    public ResponseEntity<?> CustomForbiddenException(CustomForbiddenException e) {
+        log.error(e.getMessage());
+        ResponseEntity<?> response = responseUtils.getResponse(e.getResultCode(), HttpStatus.FORBIDDEN);
+        LoggingUtils.showCallLog(response);
+        return response;
+    }
+
+    /**
+     *  JPA 처리 중 에러 응답 처리 Exception
      *
      * @param e ConstraintViolationException
      * @param e DataIntegrityViolationException

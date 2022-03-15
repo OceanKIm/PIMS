@@ -1,6 +1,5 @@
 package com.pims.api.domain.user.controller;
 
-
 import com.pims.api.cont.Const;
 import com.pims.api.cont.ResultCode;
 import com.pims.api.custom.CustomMap;
@@ -119,7 +118,7 @@ public class EmployeeController {
         LoginLog loginLog = loginLogService.insertLog(employeeLoginDto.getEmpNo(), address);
 
         // jwt 토큰 생성
-        TokenDTO tokenDTO = jwtProvider.generateTokenDto(Const.USER_ROLE.getUserRole(employeeLoginDto.getEmpRole()));
+        TokenDTO tokenDTO = jwtProvider.generateTokenDto(Const.USER_ROLE.getUserRole(employeeLoginDto.getEmpRole()), employeeLoginDto.getEmpNo());
 
         // 토큰 정보 response 등록
         responseMap.put("tokenInfo", tokenDTO);

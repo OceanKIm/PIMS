@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 /**
  * Const
- * : server 상수 값 정의 클래스
+ * : server 및 DB 상수 값 정의 클래스
  *
  * @author hskim
  * @version 1.0.0
@@ -20,8 +20,8 @@ public class Const {
      * DB 설정테이블 키
      */
     public enum CONFIG_KEY {
-        ACCESS_TOKEN_EXP_HOUR,
-        REFRESH_TOKEN_EXP_HOUR,
+        ACCESS_TOKEN_EXP_MIN,
+        REFRESH_TOKEN_EXP_MIN,
         PASSWORD_ENCRYPTION_ALGORITHM,
         IS_SERVER_AOP_LOG,
         IS_SERVER_AOP_REQ_LOG_HEADER,
@@ -48,8 +48,8 @@ public class Const {
      * 인중 헤더 타입 enum
      */
     public enum HTTP_AUTH_HEADER {
-        eAUTH_ACCESS_TOKEN("X-AUTH-ACCESS-TOKEN"),
-        eAUTH_ID("X-AUTH-ID");  // TODO 추후 필요시 사용
+        AUTH_ACCESS_TOKEN("X-AUTH-ACCESS-TOKEN"),
+        AUTH_ID("X-AUTH-ID");  // TODO 추후 필요시 사용
 
         private final String header;
 
@@ -75,8 +75,13 @@ public class Const {
      */
     public enum JWT_KEY {
         type,
+        level,
         exp,
-        level
+        empNo;
+
+        public static final String ACCESS_TOKEN = "access";
+        public static final String REFRESH_TOKEN = "refresh";
+
     }
 
     /**

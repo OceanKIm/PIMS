@@ -1,6 +1,7 @@
 package com.pims.api.provider;
 
 import com.pims.api.cont.Const;
+import com.pims.api.cont.ResultCode;
 import com.pims.api.custom.CustomMap;
 import com.pims.api.custom.PIMSAuthenticationToken;
 import com.pims.api.domain.common.dto.TokenDTO;
@@ -19,10 +20,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 /**
  * JwtProvider
@@ -43,7 +41,6 @@ public class JwtProvider {
 
     private final MessageUtils messageUtils;
 
-
     /**
      * 초기화
      */
@@ -58,27 +55,33 @@ public class JwtProvider {
      * @param userRole   API 인증타입
      * @return TokenDTO 토큰 결과 DTO
      */
-    public TokenDTO generateTokenDto(Const.USER_ROLE userRole) {
+    public TokenDTO generateTokenDto(Const.USER_ROLE userRole, Integer empNo) {
 
         Date now = new Date();
-        int accessTokenHour = (int) Const.G_SERVER_CONFIG.get(Const.CONFIG_KEY.ACCESS_TOKEN_EXP_HOUR.name());
-        int refreshTokenHour = (int) Const.G_SERVER_CONFIG.get(Const.CONFIG_KEY.ACCESS_TOKEN_EXP_HOUR.name());
-        long accessTokenExpiration = (accessTokenHour * 60L) * 60 * 1000L;
-        long refreshTokenExpiration = (refreshTokenHour * 60L) * 60 * 1000L;
+        int accessTokenExpMin = (int) Const.G_SERVER_CONFIG.get(Const.CONFIG_KEY.ACCESS_TOKEN_EXP_MIN.name());
+        int refreshTokenExpMin = (int) Const.G_SERVER_CONFIG.get(Const.CONFIG_KEY.ACCESS_TOKEN_EXP_MIN.name());
+        long accessTokenExpiration = (accessTokenExpMin * 60L) * 60 * 1000L;
+        long refreshTokenExpiration = (refreshTokenExpMin * 60L) * 60 * 1000L;
 
         // Access Token 생성
         Date accessTokenExpires = new Date(now.getTime() + accessTokenExpiration);
         String accessToken = Jwts.builder()
-                .claim(Const.JWT_KEY.type.name(), userRole.name())
-                .claim(Const.JWT_KEY.exp.name(), accessTokenExpires)
+                .claim(Const.JWT_KEY.type.name(), Const.JWT_KEY.ACCESS_TOKEN)
                 .claim(Const.JWT_KEY.level.name(), userRole.getUserLevel())
+                .claim(Const.JWT_KEY.exp.name(), accessTokenExpires)
+                .claim(Const.JWT_KEY.empNo.name(), empNo)
                 .setExpiration(accessTokenExpires)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
 
         // Refresh Token 생성
+        Date refreshTokenExpires = new Date(now.getTime() + refreshTokenExpiration);
         String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now.getTime() + refreshTokenExpiration))
+                .claim(Const.JWT_KEY.type.name(), Const.JWT_KEY.REFRESH_TOKEN)
+                .claim(Const.JWT_KEY.level.name(), userRole.getUserLevel())
+                .claim(Const.JWT_KEY.exp.name(), refreshTokenExpires)
+                .claim(Const.JWT_KEY.empNo.name(), empNo)
+                .setExpiration(refreshTokenExpires)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
 
@@ -94,49 +97,25 @@ public class JwtProvider {
      * @param token 인증토큰
      * @return boolean 유효성 결과
      */
-    public boolean isValidateToken(String token) throws CustomForbiddenException {
+    public boolean isValidateToken(String token) {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            return true;
-        } catch (SecurityException | MalformedJwtException e) {
-            log.info("잘못된 JWT 서명입니다.");
+        } catch (SecurityException | MalformedJwtException | SignatureException e) {
+            log.error("JWT 토큰의 기존 서명을 확인하지 못하였습니다.");
+            throw new CustomForbiddenException(ResultCode.MALFORMED_TOKEN_ERROR);
         } catch (ExpiredJwtException e) {
             log.info("만료된 JWT 토큰입니다.");
+            throw new CustomForbiddenException(ResultCode.EXPIRED_TOKEN_ERROR);
         } catch (UnsupportedJwtException e) {
             log.info("지원되지 않는 JWT 토큰입니다.");
+            throw new CustomForbiddenException(ResultCode.UNSUPPORTED_TOKEN_ERROR);
         } catch (IllegalArgumentException e) {
             log.info("JWT 토큰이 잘못되었습니다.");
+            throw new CustomForbiddenException(ResultCode.ARGUMENT_TOKEN_ERROR);
         }
-        return false;
+        return true;
     }
 
-    /**
-     * 토큰 유효성 검사 MSG
-     *
-     * @param token 인증토큰
-     * @return boolean 유효성 결과
-     */
-    public Integer isValidateTokenMsg(String token) throws CustomForbiddenException {
-        try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            return 1;
-        } catch (SecurityException | MalformedJwtException e) {
-            log.info("잘못된 JWT 서명입니다.");
-            return 2;
-        } catch (ExpiredJwtException e) {
-            log.info("만료된 JWT 토큰입니다.");
-            return 3;
-        } catch (UnsupportedJwtException e) {
-            log.info("지원되지 않는 JWT 토큰입니다.");
-            return 4;
-        } catch (IllegalArgumentException e) {
-            log.info("JWT 토큰이 잘못되었습니다.");
-            return 5;
-        } catch (Exception e){
-            log.info("인증토큰이 존재하지 않습니다.");
-            return 0;
-        }
-    }
 
     /**
      * 헤더에 토큰 가져오기
@@ -145,7 +124,7 @@ public class JwtProvider {
      * @return 인증 DTO 리턴합니다.
      */
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader(Const.HTTP_AUTH_HEADER.eAUTH_ACCESS_TOKEN.getHeader());
+        return request.getHeader(Const.HTTP_AUTH_HEADER.AUTH_ACCESS_TOKEN.getHeader());
     }
 
     /**
@@ -158,13 +137,24 @@ public class JwtProvider {
     public Authentication getAuthentication(ServletRequest request, String token) {
 
         String address = Utils.getIpAddress((HttpServletRequest) request);
+
+        // 권한 가져오기
         Integer userLevel = (int) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get(Const.JWT_KEY.level.name());
         Const.USER_ROLE userRole = Const.USER_ROLE.getUserRole(userLevel);
 
+        // 권한 체크 적용
         ArrayList<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(userRole.getAuthority()));
 
-        return new PIMSAuthenticationToken(token, address, authorities);
+        // 사용자 일련번호 가져오기
+        Integer empNo = (int) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get(Const.JWT_KEY.empNo.name());
+
+        // 상세내용 생성
+        HashMap<String, Object> details = new HashMap<>();
+        details.put("address", address);
+        details.put(Const.JWT_KEY.level.name(), userLevel);
+
+        return new PIMSAuthenticationToken(empNo,token, details, authorities);
     }
 
     /**

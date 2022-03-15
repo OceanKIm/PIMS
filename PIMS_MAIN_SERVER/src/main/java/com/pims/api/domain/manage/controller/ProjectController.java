@@ -9,6 +9,7 @@ import com.pims.api.utils.ResponseUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -72,6 +73,15 @@ public class ProjectController {
         if (null == resultList) {
             return responseUtils.getResponse(ResultCode.NON_EXISTENT);
         }
+
+        // TODO test code, later remove
+        // 시큐리티 홀더에서 사용자 정보 가져오기
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        // 시큐리티 홀더에서 사용자 토큰 가져오기
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getCredentials());
+        // 시큐리티 홀더에서 사용자 권한 정보 가져오기
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getDetails());
+
         return responseUtils.getSuccess(resultList);
     }
 
