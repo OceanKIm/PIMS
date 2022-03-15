@@ -91,6 +91,9 @@ public class JwtProvider {
                 .build();
     }
 
+
+
+
     /**
      * 토큰 유효성 검사
      *
@@ -118,15 +121,24 @@ public class JwtProvider {
 
 
     /**
-     * 헤더에 토큰 가져오기
+     * 헤더에 Access 토큰 가져오기
      *
      * @param request 요청 객체 (HttpServletRequest)
      * @return 인증 DTO 리턴합니다.
      */
-    public String resolveToken(HttpServletRequest request) {
+    public String resolveAccessToken(HttpServletRequest request) {
         return request.getHeader(Const.HTTP_AUTH_HEADER.AUTH_ACCESS_TOKEN.getHeader());
     }
 
+    /**
+     * 헤더에 Refresh 토큰 가져오기
+     *
+     * @param request 요청 객체 (HttpServletRequest)
+     * @return 인증 DTO 리턴합니다.
+     */
+    public String resolveRefreshToken(HttpServletRequest request) {
+        return request.getHeader(Const.HTTP_AUTH_HEADER.AUTH_REFRESH_TOKEN.getHeader());
+    }
     /**
      * 토큰 인증 메소드
      *

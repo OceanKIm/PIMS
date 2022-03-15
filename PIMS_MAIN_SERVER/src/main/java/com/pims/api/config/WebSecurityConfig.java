@@ -64,6 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/user/employee/join.do").permitAll()  // 회원가입 허용
                 .antMatchers("/user/employee/login.do").permitAll() // 로그인 허용
+                .antMatchers("/user/employee/refreshToken.do").permitAll() // 토큰 재발급 허용
 
                 // 관리자 사용 API 권한 등록
 

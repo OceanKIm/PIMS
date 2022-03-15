@@ -49,6 +49,7 @@ public class Const {
      */
     public enum HTTP_AUTH_HEADER {
         AUTH_ACCESS_TOKEN("X-AUTH-ACCESS-TOKEN"),
+        AUTH_REFRESH_TOKEN("X-AUTH-REFRESH-TOKEN"),
         AUTH_ID("X-AUTH-ID");  // TODO 추후 필요시 사용
 
         private final String header;

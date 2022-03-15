@@ -10,6 +10,7 @@ import com.pims.api.domain.user.entity.LoginLog;
 import com.pims.api.domain.user.service.EmployeeService;
 import com.pims.api.domain.user.service.LoginLogService;
 import com.pims.api.domain.user.service.UserInfoService;
+import com.pims.api.exception.CustomForbiddenException;
 import com.pims.api.provider.JwtProvider;
 import com.pims.api.utils.EncryptUtil;
 import com.pims.api.utils.ResponseUtils;
@@ -17,7 +18,10 @@ import com.pims.api.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -53,7 +57,7 @@ public class EmployeeController {
      * Controller
      * : 사용자 회원 가입 API
      *
-     * @authLevel 1
+     * @authLevel ALL
      * @method  POST
      * @uriPath /user/employee/join.do
      *
@@ -96,7 +100,7 @@ public class EmployeeController {
      * Controller
      * : 사용자 로그인 API
      *
-     * @authLevel 1
+     * @authLevel ALL
      * @method POST
      * @uriPath /user/employee/login.do
      *
@@ -130,4 +134,43 @@ public class EmployeeController {
 
         return responseUtils.getSuccess(responseMap);
     }
+
+    /**
+     * Controller
+     * : JWT 토큰 리프레쉬 API
+     *
+     * @authLevel ALL
+     * @method  GET or POST or PUT or DELETE
+     * @uriPath api uri 경로를 입력한다.
+     *
+     * @Header
+     * @return  org.springframework.http.ResponseEntity<?>
+     */
+    @RequestMapping(value = "/employee/refreshToken.do", method = RequestMethod.POST)
+    public ResponseEntity<?> refreshToken(HttpServletRequest request) {
+        HashMap<String,Object> responseMap = new HashMap<>();
+        String token = jwtProvider.resolveRefreshToken(request);
+        if (null != token && jwtProvider.isValidateToken(token)) {
+
+            // refresh 토큰인지 유효성 검사
+            String type = jwtProvider.getTokenPayLoadInfo(token, Const.JWT_KEY.type.name());
+            if (!Const.JWT_KEY.REFRESH_TOKEN.equals(type)) {
+                throw new CustomForbiddenException(ResultCode.NOT_TOKEN_TYPE_ERROR);
+            }
+
+            // refresh token 정보 가져오기
+            CustomMap bodyMap = jwtProvider.getTokenBodyInfo(token);
+
+            // jwt 토큰 생성
+            TokenDTO tokenDTO = jwtProvider.generateTokenDto(
+                    Const.USER_ROLE.getUserRole((int)bodyMap.get(Const.JWT_KEY.level.name())),
+                    (int)bodyMap.get(Const.JWT_KEY.empNo.name()));
+
+            responseMap.put("tokenInfo", tokenDTO);
+        } else {
+            return responseUtils.getResponse(ResultCode.FAILURE);
+        }
+        return responseUtils.getSuccess(responseMap);
+    }
+
 }

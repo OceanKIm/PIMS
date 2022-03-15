@@ -26,7 +26,7 @@ public enum MessageCode {
     RESULT_CODE_FILE_SIZE_ERROR,                                                         // 파일 사이즈를 초과했습니다.
     RESULT_CODE_FORBIDDEN_ERROR,                                                         // 인증되지 않은 사용자 입니다.
     RESULT_CODE_NOT_LOGIN_ERROR,                                                         // 로그아웃 된 회원입니다.
-    RESULT_CODE_NOT_TOKEN_ERROR,                                                         // 인증토큰이 존재하지 않습니다.
+    RESULT_CODE_NOT_TOKEN_TYPE_ERROR,                                                    // 토큰 타입이 맞지 않습니다.(ACCESS 토큰 타입 필요)
     RESULT_CODE_MALFORMED_TOKEN_ERROR,                                                   // 잘못된 토큰 서명입니다.
     RESULT_CODE_EXPIRED_TOKEN_ERROR,                                                     // 만료된 토큰입니다.
     RESULT_CODE_UNSUPPORTED_TOKEN_ERROR,                                                 // 지원하지 않는 토큰입니다.

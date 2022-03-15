@@ -3,6 +3,7 @@ package com.pims.api.filter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.pims.api.cont.Const;
 import com.pims.api.cont.ResultCode;
 import com.pims.api.domain.common.dto.ResponseDTO;
 import com.pims.api.exception.CustomForbiddenException;
@@ -44,10 +45,16 @@ public class JwtAuthFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) {
         // 응답 객체 생성 시 활용
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-
         try {
-            String token = jwtProvider.resolveToken((HttpServletRequest) request);
+            String token = jwtProvider.resolveAccessToken((HttpServletRequest) request);
             if (null != token && jwtProvider.isValidateToken(token)) {
+
+                // Access 토큰인지 유효성 검사
+                String type = jwtProvider.getTokenPayLoadInfo(token, Const.JWT_KEY.type.name());
+                if (!Const.JWT_KEY.ACCESS_TOKEN.equals(type)) {
+                    throw new CustomForbiddenException(ResultCode.NOT_TOKEN_TYPE_ERROR);
+                }
+
                 Authentication authentication = jwtProvider.getAuthentication(request, token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
