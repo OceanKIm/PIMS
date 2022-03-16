@@ -44,6 +44,7 @@ dependencies {
 
 	// mybatis
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+	implementation 'junit:junit:4.13.1'
 
 	// lombok
 	compileOnly 'org.projectlombok:lombok'
