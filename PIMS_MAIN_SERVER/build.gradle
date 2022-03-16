@@ -53,9 +53,6 @@ dependencies {
 	//log
 	implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4', version: '1.16'
 
-	// java mail
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
-
 	// security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 

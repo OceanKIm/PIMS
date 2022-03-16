@@ -32,11 +32,11 @@ public class EmpProjectRLTN {
     @Column(name = "emp_no", nullable = false)
     private Integer empNo;
 
-    @Column(name = "project_code", nullable = false)
-    private Integer projectCode;
+    @Column(name = "project_cd", nullable = false)
+    private Integer projectCd;
 
-    @Column(name = "project_pos", nullable = false, length = 5)
-    private String projectPos;
+    @Column(name = "project_pos_cd", nullable = false, length = 5)
+    private String projectPosCd;
 
     @Column(name = "reg_dt", nullable = false, length = 45)
     private String regDt;

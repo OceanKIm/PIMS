@@ -17,7 +17,7 @@ public class ProjectCreateDto implements Serializable {
     private String projectCd;
 
     @NotEmpty
-    private String projectType;
+    private String projectTypeCd;
 
     @NotEmpty
     private String projectTitle;

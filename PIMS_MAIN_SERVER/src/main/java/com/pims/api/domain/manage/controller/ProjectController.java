@@ -4,6 +4,7 @@ package com.pims.api.domain.manage.controller;
 import com.pims.api.cont.ResultCode;
 import com.pims.api.domain.manage.controller.dto.ProjectCreateDto;
 import com.pims.api.domain.manage.entity.Project;
+import com.pims.api.domain.manage.service.ManagerInfoService;
 import com.pims.api.domain.manage.service.ProjectService;
 import com.pims.api.utils.ResponseUtils;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,8 @@ public class ProjectController {
 
     private final ProjectService projectService;
 
+    private final ManagerInfoService managerInfoService;
+
     /**
      * Controller
      * : 프로젝트 생성 API
@@ -49,6 +52,10 @@ public class ProjectController {
     public ResponseEntity<?> createProject(@RequestBody @Valid final ProjectCreateDto projectCreateDto) {
 
         // TODO 각종 유효성 체크
+        // 프로젝트 타입 코드 유효성 체크
+        if (!managerInfoService.existsByProjectTypeCd(projectCreateDto.getProjectTypeCd())) {
+            return responseUtils.getResponse(ResultCode.FAILURE);
+        }
 
         // 프로젝트 생성
         if (!projectService.createProject(projectCreateDto)) {
