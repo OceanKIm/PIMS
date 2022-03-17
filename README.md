@@ -1,9 +1,9 @@
 # PIMS
 ## 사내 프로젝트 정보 관리 시스템
 
- ※프로젝트 개요
- PIMS  (project informaion manage system) 
-  : 사내 프로젝트 정보 관리 시스템
+### ※프로젝트 개요
+> PIMS  (project informaion manage system) 
+> : 사내 프로젝트 정보 관리 시스템
   
 ### ○ Requirements Specification
 #### - 사용자
