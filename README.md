@@ -1,4 +1,4 @@
-# project_information_manage_system
+# PIMS
 ## [개인포트폴리오] 사내 프로젝트 정보 관리 시스템
 
  ※프로젝트 개요
