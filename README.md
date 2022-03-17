@@ -10,6 +10,8 @@
 > 또한 개발자의 입장에서 실제 업무에 주어진 과제를 수행함에 있어서
 > 협업 능률을 높이고자 과제 업무 중 발생한 이슈를 로그화 하고 게시판을 활용하게 하는 시스템 
 
+> <U>또한 개발자와 경영진의 소통을 프로젝트 진행 현황 팩트를 기반으로 도와준다.</U>
+
 
 ### ○Architecture 
 ![pims msa architecture](https://user-images.githubusercontent.com/63697029/158719736-e05d5470-fca7-4acc-9424-0333c4b07e83.jpg)
