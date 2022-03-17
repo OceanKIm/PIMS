@@ -10,6 +10,11 @@
 > 게시판을 활용하게 하는 시스템 
 
 
+
+
+![pims msa architecture](https://user-images.githubusercontent.com/63697029/158719736-e05d5470-fca7-4acc-9424-0333c4b07e83.jpg)
+
+
 - ERD CLOUD (현재 설계중)
 - https://www.erdcloud.com/d/xijrsTX8Bchwhvo3B
 ![오픈프로젝트이슈관리시스템](https://user-images.githubusercontent.com/63697029/156521763-303b22da-4d33-458a-8732-5cf726f62d34.png)
