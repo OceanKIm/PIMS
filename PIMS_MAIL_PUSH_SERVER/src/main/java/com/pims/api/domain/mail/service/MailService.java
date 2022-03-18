@@ -1,8 +1,7 @@
-package com.pims.mail.api.service;
+package com.pims.api.domain.mail.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -21,9 +20,6 @@ public class MailService {
     private String sendFrom;
 
     public boolean sendAuthMail(String userEmail) {
-
-        // TODO: 2021-09-16 NCJ
-        // 메일 내용구성 필요
 
         String mailTitle = "";
         String mailContents = "<p>안녕하세요.<p>";

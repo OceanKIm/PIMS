@@ -1,7 +1,7 @@
-package com.pims.mail.api.controller;
+package com.pims.api.mail.controller;
 
 
-import com.pims.mail.api.service.MailService;
+import com.pims.api.domain.mail.service.MailService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

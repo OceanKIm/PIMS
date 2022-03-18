@@ -1,4 +1,4 @@
-package com.pims.mail.api.mapper;
+package com.pims.api.domain.mail.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 

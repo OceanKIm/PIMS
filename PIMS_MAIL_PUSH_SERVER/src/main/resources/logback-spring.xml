@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- application.yaml 에 정의한 log level, dir 데이터를 정의합니다 -->
+    <springProperty scope="context" name="LOG_LEVEL" source="SERVER.LOG.LEVEL"/>
+    <springProperty scope="context" name="LOG_DIR" source="SERVER.LOG.DIR"/>
+    <springProperty scope="context" name="PROJECT_NAME" source="SERVER.PROJECT.NAME"/>
+
+    <!--콘솔에 로그를 남깁니다.-->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <!--<filter class="com.pims.api.filter.LogbackFilter"/>-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy.MM.dd HH:mm:ss.SSS} [%X{address}] [%thread] %-3level %logger{5} - %msg %n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--파일에 로그를 남깁니다.-->
+    <appender name="File" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${PROJECT_NAME}_LOG.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy.MM.dd HH:mm:ss.SSS} [%X{address}] [%thread] %-3level %logger{5} - %msg %n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/LGB_LOG/LGB_LOG.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!--파일에 로그를 남깁니다. (Roling)-->
+    <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/archived/${PROJECT_NAME}__LOG_ROLLING.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy.MM.dd HH:mm:ss.SSS} [%X{address}] [%thread] %-3level %logger{5} - %msg %n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+
+        <!-- 10MB가 넘어가면 새로운 압축파일이 생성 -->
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>10MB</MaxFileSize>
+        </triggeringPolicy>
+
+        <!-- 파일을 덮어쓰는 정책 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>${LOG_DIR}/archived/${PROJECT_NAME}__LOG_ROLLING.%i.log.zip</FileNamePattern>
+            <!--
+                10MB단위로 로그 압축 파일이 생성된다. (1 ~ 10)
+                10개가 넘어가면 오래된순으로 덮어쓰기 됩니다.
+            -->
+            <MinIndex>1</MinIndex>
+            <MaxIndex>10</MaxIndex>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 에러 일 경우 파일에 로그를 남깁니다-->
+    <appender name="Error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>${LOG_DIR}/LGB_LOG_ERROR.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy.MM.dd HH:mm:ss.SSS} [%X{address}] [%thread] %-3level %logger{5} - %msg %n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/LGB_LOG/LGB_LOG_ERROR.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- log4jdbc 옵션 설정 -->
+    <logger name="jdbc" level="OFF"/>
+
+    <!-- 커넥션 open close 이벤트를 로그로 남긴다. -->
+    <logger name="jdbc.connection" level="OFF"/>
+
+    <!-- SQL문만을 로그로 남기며, PreparedStatement일 경우 관련된 argument 값으로 대체된 SQL문이 보여진다. -->
+    <logger name="jdbc.sqlonly" level="OFF"/>
+
+    <!-- SQL문과 해당 SQL을 실행시키는데 수행된 시간 정보(milliseconds)를 포함한다. -->
+    <logger name="jdbc.sqltiming" level="DEBUG"/>
+
+    <!-- ResultSet을 제외한 모든 JDBC 호출 정보를 로그로 남긴다. 많은 양의 로그가 생성되므로 특별히 JDBC 문제를 추적해야 할 필요가 있는 경우를 제외하고는 사용을 권장하지 않는다. -->
+    <logger name="jdbc.audit" level="OFF"/>
+
+    <!-- ResultSet을 포함한 모든 JDBC 호출 정보를 로그로 남기므로 매우 방대한 양의 로그가 생성된다. -->
+    <logger name="jdbc.resultset" level="OFF"/>
+
+    <!-- SQL 결과 조회된 데이터의 table을 로그로 남긴다. -->
+    <logger name="jdbc.resultsettable" level="OFF"/>
+
+    <!--
+        DEBUG 레벨 로그를 Console, File, RollingFile에 남깁니다.
+        ERROR 인 경우 bamdule-error.log에 남깁니다.    -->
+    <root level="${LOG_LEVEL}">
+        <appender-ref ref="Console"/>
+        <appender-ref ref="File"/>
+        <appender-ref ref="Error"/>
+    </root>
+
+</configuration>

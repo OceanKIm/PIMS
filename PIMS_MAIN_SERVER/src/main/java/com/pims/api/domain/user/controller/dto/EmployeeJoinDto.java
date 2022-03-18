@@ -42,6 +42,4 @@ public class EmployeeJoinDto implements Serializable {
 
     private String devPosCd;
 
-    private Integer devMonth;
-
 }

@@ -56,9 +56,6 @@ public class Employee {
     @Column(name = "dev_pos_cd")
     private String devPosCd;
 
-    @Column(name = "dev_month")
-    private Integer devMonth;
-
     @Column(name = "emp_st", length = 2)
     private String empSt = "W"; // default 가입 대기 상태
 
